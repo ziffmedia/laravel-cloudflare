@@ -2,9 +2,9 @@
 
 namespace ZiffDavis\Laravel\Cloudflare\Http\Controllers\Concerns;
 
-use App\Services\Cloudflare;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use ZiffDavis\Laravel\Cloudflare\Services\Cloudflare;
 
 trait CloudflareTaggable
 {
