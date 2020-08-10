@@ -1,38 +1,29 @@
 {
-    "name": "ziffdavis/laravel-cloudflare",
-    "description": "Laravel helpers for managing cache tagging and purging in Cloudflare (Enterprise)",
-    "type": "library",
-    "require": {
-        "php": "^7.1",
-        "cloudflare/sdk": "^1.1"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^7.5",
-        "laravel/laravel": "^5.6.0",
-        "orchestra/testbench": "^3.8"
-    },
+    "name": "ziffmedia/laravel-cloudflare",
+    "description": "A Laravel Nova tool.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
     "license": "MIT",
+    "require": {
+        "php": ">=7.1.0"
+    },
     "autoload": {
         "psr-4": {
-            "ZiffDavis\\Laravel\\Cloudflare\\": "src"
+            "Ziffmedia\\LaravelCloudflare\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Jeff Carouth",
-            "email": "jeff.carouth@ziffmedia.com"
-        }
-    ],
     "extra": {
         "laravel": {
             "providers": [
-                "ZiffDavis\\Laravel\\Cloudflare\\Providers\\CloudflareServiceProvider"
+                "Ziffmedia\\LaravelCloudflare\\ToolServiceProvider"
             ]
         }
-    }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

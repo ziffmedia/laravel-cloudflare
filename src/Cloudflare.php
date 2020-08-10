@@ -1,6 +1,6 @@
 <?php
 
-namespace ZiffDavis\Laravel\Cloudflare\Services;
+namespace Ziffmedia\LaravelCloudflare;
 
 use Cloudflare\API\Adapter\Guzzle;
 use Cloudflare\API\Auth\APIKey;
@@ -9,8 +9,6 @@ use Illuminate\Support\Collection;
 
 class Cloudflare
 {
-    /** @var array tags */
-    protected $tags = [];
 
     protected $email;
     protected $key;
@@ -26,52 +24,21 @@ class Cloudflare
         $this->key = $key;
     }
 
-    public function addTag(string $tag)
+    public function purgeCacheByUrl($urls)
     {
-        $this->tags[] = $tag;
-    }
-
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    /**
-     * @param array $tags
-     */
-    public function setTags(array $tags)
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function purgeCacheByTags()
-    {
-        if (config('cloudflare.purge_enabled')) {
+        if (Config('cloudflare.purge_enabled')) {
             $zone = $this->getCloudflareZonesEndpoint();
 
             try {
-                collect($this->tags)->chunk(25)->each(function (Collection $chunk) use ($zone) {
-                    $zone->cachePurge($this->zone, null, $chunk->toArray());
-                });
-                $this->tags = [];
+                $zone->cachePurge($this->zone, $urls);
             } catch (\Exception $e) {
                 logger()->warning($e->getMessage());
 
                 throw $e;
             }
         } else {
-            logger()->info('Cloudflare::purgeCacheByTags requested but purge is not enabled');
+            logger()->info('Cloudflare::purgeCacheByUrl requested but purge is not enabled');
         }
-    }
-
-    public function setCloudflareZonesEndpoint(Zones $zonesEndpoint)
-    {
-        $this->zonesEndpoint = $zonesEndpoint;
     }
 
     public function getCloudflareZonesEndpoint()
