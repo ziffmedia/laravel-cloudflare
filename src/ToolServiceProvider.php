@@ -1,12 +1,12 @@
 <?php
 
-namespace Ziffmedia\LaravelCloudflare;
+namespace ZiffMedia\LaravelCloudflare;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
-use Ziffmedia\LaravelCloudflare\Http\Middleware\Authorize;
+use ZiffMedia\LaravelCloudflare\Http\Middleware\Authorize;
 
 class ToolServiceProvider extends ServiceProvider
 {

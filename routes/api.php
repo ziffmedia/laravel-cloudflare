@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Support\Facades\Route;
-use Ziffmedia\LaravelCloudflare\Cloudflare;
+use ZiffMedia\LaravelCloudflare\Cloudflare;
 /*
 |--------------------------------------------------------------------------
 | Tool API Routes
