@@ -1,6 +1,6 @@
 <?php
 
-namespace Ziffmedia\LaravelCloudflare;
+namespace ZiffMedia\LaravelCloudflare;
 
 use Cloudflare\API\Adapter\Guzzle;
 use Cloudflare\API\Auth\APIKey;

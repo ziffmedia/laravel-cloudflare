@@ -1,9 +1,9 @@
 <?php
 
-namespace Ziffmedia\LaravelCloudflare\Http\Middleware;
+namespace ZiffMedia\LaravelCloudflare\Http\Middleware;
 
 use Laravel\Nova\Nova;
-use Ziffmedia\LaravelCloudflare\LaravelCloudflare;
+use ZiffMedia\LaravelCloudflare\LaravelCloudflare;
 
 class Authorize
 {
