@@ -23,7 +23,7 @@ class ToolServiceProvider extends ServiceProvider
             $this->routes();
         });
         $this->app->singleton(Cloudflare::class, function () {
-            return new Cloudflare(config('cloudflare.zone'), config('cloudflare.email'), config('cloudflare.key'));
+            return new Cloudflare("e543938826d94c4ef0b129d96ef9a172", "josh@ziffdavis.com", "9f94ff7ea4fe5b66e545df2f9efa439ee0060");
         });
         Nova::serving(function (ServingNova $event) {
             //
