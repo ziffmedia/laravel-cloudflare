@@ -13,7 +13,7 @@
 
                 <button type="submit" class="btn btn-default btn-primary block m-auto my-3">Clear Cache</button>
             </form>
-            <p v-if="hasResponse" class="mb-6 mt-1 max-w-lg"><span class="font-bold mt-1 mb-6">RESULTS: </span><span v-if="success" class="success mt-1 mb-6" v-text="responseMessage"></span><span v-else class="error mt-1 mb-6" v-text="responseMessage"></span></p>
+            <p v-if="hasResponse" class="mb-6 mt-1 max-w-lg"><span class="font-bold mt-1 mb-6">RESULTS: </span><span v-if="successMessage" class="success mt-1 mb-6" v-text="successMessage"></span><span v-else class="error mt-1 mb-6" v-text="errorMessage"></span></p>
         </card>
     </div>
 </template>
@@ -24,9 +24,9 @@ export default {
         return {
             errors: [],
             urls: [],
-            responseMessage: "",
+            errorMessage: null,
+            successMessage: null,
             hasResponse: false,
-            success: false,
         }
     },
     methods: {
@@ -40,9 +40,8 @@ export default {
             .then(resp => {
                 if (resp.data) {
                     self.hasResponse = true;
-
-                    self.responseMessage = resp.data[0];
-                    self.success = resp.data[1];
+                    self.errorMessage = resp.data[0];
+                    self.successMessage = resp.data[1];
                 }
             });
             e.preventDefault();

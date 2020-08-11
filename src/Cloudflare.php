@@ -22,15 +22,15 @@ class Cloudflare
         $this->zone = $zone;
         $this->email = $email;
         $this->key = $key;
+
     }
 
     public function purgeCacheByUrl($urls)
     {
         if (Config('cloudflare.purge_enabled')) {
             $zone = $this->getCloudflareZonesEndpoint();
-
             try {
-                $zone->cachePurge($this->zone, $urls);
+                $zone->cachePurge($this->zone, $valid_urls);
             } catch (\Exception $e) {
                 logger()->warning($e->getMessage());
 

@@ -13,11 +13,6 @@ class LaravelCloudflare extends Tool
      * @return void
      */
 
-    public function __construct($zone, $email, $key)
-    {
-        parent::__construct($zone, $email, $key);
-    }
-
     public function boot()
     {
         Nova::script('laravel-cloudflare', __DIR__.'/../dist/js/tool.js');
