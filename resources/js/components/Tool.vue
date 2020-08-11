@@ -35,7 +35,7 @@ export default {
             let request = {
                 'urls': urlArray
             };
-             Nova.request().post('/nova-vendor/laravel-cloudlflare/purge', request)
+             Nova.request().post('/laravel-cloudlflare/purge', request)
             .then(resp => {
                 if (resp.data) {
                     self.hasResponse = true;
