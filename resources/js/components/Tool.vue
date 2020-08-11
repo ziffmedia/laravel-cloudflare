@@ -13,7 +13,9 @@
 
                 <button type="submit" class="btn btn-default btn-primary block m-auto my-3">Clear Cache</button>
             </form>
-            <p v-if="hasResponse" class="mb-6 mt-1"><span class="font-bold text-cyan-100 mt-1 mb-6">RESULTS: </span><span class="text-cyan-100 mt-1 mb-6" v-text="errorMessage"></span></p>
+            <p v-if="hasResponse" class="mb-6 mt-1 max-w-lg"><span class="font-bold mt-1 mb-6 text-center">RESULTS: </span></p>
+            <p class="mb-6 mt-1 max-w-lg text-center"><span v-if="successMessage" class="success mt-1 mb-6" v-text="successMessage"></span></p>
+            <p class="mb-6 mt-1 max-w-lg text-center"><span v-if="errorMessage" class="error mt-1 mb-6" v-text="errorMessage"></span></p>
         </card>
     </div>
 </template>
@@ -24,8 +26,9 @@ export default {
         return {
             errors: [],
             urls: [],
-            errorMessage: "",
-            hasResponse: false
+            errorMessage: null,
+            successMessage: null,
+            hasResponse: false,
         }
     },
     methods: {
@@ -35,11 +38,12 @@ export default {
             let request = {
                 'urls': urlArray
             };
-             Nova.request().post('/nova-vendor/laravel-cloudlflare/purge', request)
+             Nova.request().post('/nova-vendor/laravel-cloudflare/purge', request)
             .then(resp => {
                 if (resp.data) {
                     self.hasResponse = true;
-                    self.errorMessage = resp.data;
+                    self.errorMessage = resp.data[0];
+                    self.successMessage = resp.data[1];
                 }
             });
             e.preventDefault();

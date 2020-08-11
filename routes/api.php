@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Support\Facades\Route;
 use ZiffMedia\LaravelCloudflare\Cloudflare;
+use Illuminate\Support\Str;
 /*
 |--------------------------------------------------------------------------
 | Tool API Routes
@@ -20,12 +21,35 @@ use ZiffMedia\LaravelCloudflare\Cloudflare;
 // });
 Route::post('/purge', function (NovaRequest $request) {
     $urls = $request->input('urls');
+    $errorMessage = null;
+    $successMessage =null;
+
     try {
+        $valid_urls = [];
+        $nonvalid_urls = [];
+        $domains = config('cloudflare.domains');
+        if ($domains) {
+            foreach ($urls as $url) {
+                if (Str::contains($url, $domains)) {
+                    array_push($valid_urls, $url);
+                } else {
+                    array_push($nonvalid_urls, $url);
+                }
+            }
+        } else {
+            $valid_urls = $urls;
+        }
         app(Cloudflare::class)
-        ->purgeCacheByUrl($urls);
-        $message = 'Cache cleared!';
+        ->purgeCacheByUrl($valid_urls);
+        if (count($valid_urls) > 0) {
+            $successMessage = 'CACHE CLEARED FOR: '. implode(", ", $valid_urls) . ' !';
+        }
+        if(count($nonvalid_urls) > 0){
+            $errorMessage = 'DOMAINS NOT VALID: '. implode(", ", $nonvalid_urls) . ' !';
+        }
     } catch (\Exception $e) {
-        $message = $e->getMessage();
+        $errorMessage = $e->getMessage();
+
     }
-    return $message;
+    return [$errorMessage, $successMessage];
 });
