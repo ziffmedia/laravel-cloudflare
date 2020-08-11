@@ -38,10 +38,10 @@ Route::post('/purge', function (NovaRequest $request) {
         }
         app(Cloudflare::class)
         ->purgeCacheByUrl($valid_urls);
-        if ($valid_urls.length > 0) {
+        if (count($valid_urls) > 0) {
             $successMessage = 'CACHE CLEARED FOR: '. implode(", ", $valid_urls) . ' !';
         }
-        if($nonvalid_urls) {
+        if(count($nonvalid_urls) > 0){
             $errorMessage = 'DOMAINS NOT VALID: '. implode(", ", $nonvalid_urls) . ' !';
         }
     } catch (\Exception $e) {

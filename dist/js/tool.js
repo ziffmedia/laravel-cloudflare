@@ -889,10 +889,13 @@ var render = function() {
                       staticClass: "success mt-1 mb-6",
                       domProps: { textContent: _vm._s(_vm.successMessage) }
                     })
-                  : _c("span", {
+                  : _vm._e(),
+                _vm.errorMessage
+                  ? _c("span", {
                       staticClass: "error mt-1 mb-6",
                       domProps: { textContent: _vm._s(_vm.errorMessage) }
                     })
+                  : _vm._e()
               ])
             : _vm._e()
         ]
