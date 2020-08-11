@@ -120,9 +120,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       errors: [],
       urls: [],
-      responseMessage: "",
-      hasResponse: false,
-      success: false
+      errorMessage: null,
+      successMessage: null,
+      hasResponse: false
     };
   },
   methods: {
@@ -135,8 +135,8 @@ __webpack_require__.r(__webpack_exports__);
       Nova.request().post('/nova-vendor/laravel-cloudflare/purge', request).then(function (resp) {
         if (resp.data) {
           self.hasResponse = true;
-          self.responseMessage = resp.data[0];
-          self.success = resp.data[1];
+          self.errorMessage = resp.data[0];
+          self.successMessage = resp.data[1];
         }
       });
       e.preventDefault();
@@ -158,7 +158,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Scoped Styles */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Scoped Styles */\n", ""]);
 
 // exports
 
@@ -884,14 +884,14 @@ var render = function() {
                 _c("span", { staticClass: "font-bold mt-1 mb-6" }, [
                   _vm._v("RESULTS: ")
                 ]),
-                _vm.success
+                _vm.successMessage
                   ? _c("span", {
                       staticClass: "success mt-1 mb-6",
-                      domProps: { textContent: _vm._s(_vm.responseMessage) }
+                      domProps: { textContent: _vm._s(_vm.successMessage) }
                     })
                   : _c("span", {
                       staticClass: "error mt-1 mb-6",
-                      domProps: { textContent: _vm._s(_vm.responseMessage) }
+                      domProps: { textContent: _vm._s(_vm.errorMessage) }
                     })
               ])
             : _vm._e()

@@ -30,7 +30,7 @@ class Cloudflare
         if (Config('cloudflare.purge_enabled')) {
             $zone = $this->getCloudflareZonesEndpoint();
             try {
-                $zone->cachePurge($this->zone, $valid_urls);
+                $zone->cachePurge($this->zone, $urls);
             } catch (\Exception $e) {
                 logger()->warning($e->getMessage());
 
