@@ -20,12 +20,17 @@ use ZiffMedia\LaravelCloudflare\Cloudflare;
 // });
 Route::post('/purge', function (NovaRequest $request) {
     $urls = $request->input('urls');
+    $success = false;
+    $message = "";
     try {
         app(Cloudflare::class)
         ->purgeCacheByUrl($urls);
-        $message = 'Cache cleared!';
+        $message = 'CACHE CLEARED FOR:  '+ implode(", ", $urls) + "!";
+        $success = true;
     } catch (\Exception $e) {
         $message = $e->getMessage();
+        $success = false;
+
     }
-    return $message;
+    return [$message, $success];
 });
