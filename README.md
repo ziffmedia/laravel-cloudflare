@@ -1,1 +1,7 @@
 # Integrate with Cloudflare caching
+```composer require ziffmedia/laravel-cloudflare```
+
+```LaravelCloudflare::make()``` in your NovaServiceProvider under tools.
+
+Create congif/cloudflare.php, add Cloudflare email, key, zone values. 
+Add allowable domains in an array as 'domains' in config.
