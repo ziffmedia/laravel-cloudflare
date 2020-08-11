@@ -115,6 +115,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -158,7 +160,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Scoped Styles */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Scoped Styles */\n", ""]);
 
 // exports
 
@@ -881,23 +883,29 @@ var render = function() {
           _vm._v(" "),
           _vm.hasResponse
             ? _c("p", { staticClass: "mb-6 mt-1 max-w-lg" }, [
-                _c("span", { staticClass: "font-bold mt-1 mb-6" }, [
+                _c("span", { staticClass: "font-bold mt-1 mb-6 text-center" }, [
                   _vm._v("RESULTS: ")
-                ]),
-                _vm.successMessage
-                  ? _c("span", {
-                      staticClass: "success mt-1 mb-6",
-                      domProps: { textContent: _vm._s(_vm.successMessage) }
-                    })
-                  : _vm._e(),
-                _vm.errorMessage
-                  ? _c("span", {
-                      staticClass: "error mt-1 mb-6",
-                      domProps: { textContent: _vm._s(_vm.errorMessage) }
-                    })
-                  : _vm._e()
+                ])
               ])
-            : _vm._e()
+            : _vm._e(),
+          _vm._v(" "),
+          _c("p", { staticClass: "mb-6 mt-1 max-w-lg text-center" }, [
+            _vm.successMessage
+              ? _c("span", {
+                  staticClass: "success mt-1 mb-6",
+                  domProps: { textContent: _vm._s(_vm.successMessage) }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "mb-6 mt-1 max-w-lg text-center" }, [
+            _vm.errorMessage
+              ? _c("span", {
+                  staticClass: "error mt-1 mb-6",
+                  domProps: { textContent: _vm._s(_vm.errorMessage) }
+                })
+              : _vm._e()
+          ])
         ]
       )
     ],
