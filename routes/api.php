@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Support\Facades\Route;
 use ZiffMedia\LaravelCloudflare\Cloudflare;
+use Illuminate\Support\Str;
 /*
 |--------------------------------------------------------------------------
 | Tool API Routes
@@ -29,7 +30,7 @@ Route::post('/purge', function (NovaRequest $request) {
         $domains = Config('cloudflare.domains');
         if ($domains) {
             foreach ($urls as $url) {
-                if (str_contains($url, $domains)) {
+                if (Str::contains($url, $domains)) {
                     array_push($valid_urls, $url);
                 } else {
                     array_push($nonvalid_urls, $url);
