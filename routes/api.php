@@ -20,17 +20,33 @@ use ZiffMedia\LaravelCloudflare\Cloudflare;
 // });
 Route::post('/purge', function (NovaRequest $request) {
     $urls = $request->input('urls');
-    $success = false;
-    $message = "";
+    $errorMessage = null;
+    $successMessage =null;
+
     try {
+        $valid_urls = [];
+        $nonvalid_urls = [];
+        $domains = Config('cloudflare.domains');
+        if ($domains) {
+            foreach ($urls as $url) {
+                if (str_contains($url, $domains)) {
+                    array_push($valid_urls, $url);
+                } else {
+                    array_push($nonvalid_urls, $url);
+                }
+            }
+        }
         app(Cloudflare::class)
-        ->purgeCacheByUrl($urls);
-        $message = 'CACHE CLEARED FOR: '. implode(", ", $urls) . ' !';
-        $success = true;
+        ->purgeCacheByUrl($valid_urls);
+        if ($valid_urls.length > 0) {
+            $successMessage = 'CACHE CLEARED FOR: '. implode(", ", $valid_urls) . ' !';
+        }
+        if($nonvalid_urls) {
+            $errorMessage = 'DOMAINS NOT VALID: '. implode(", ", $nonvalid_urls) . ' !';
+        }
     } catch (\Exception $e) {
-        $message = $e->getMessage();
-        $success = false;
+        $errorMessage = $e->getMessage();
 
     }
-    return [$message, $success];
+    return [$errorMessage, $successMessage];
 });
