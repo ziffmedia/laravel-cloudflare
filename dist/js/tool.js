@@ -131,7 +131,7 @@ __webpack_require__.r(__webpack_exports__);
       var request = {
         'urls': urlArray
       };
-      Nova.request().post('/nova-vendor/laravel-cloudlflare/purge', request).then(function (resp) {
+      Nova.request().post('/laravel-cloudlflare/purge', request).then(function (resp) {
         if (resp.data) {
           self.hasResponse = true;
           self.errorMessage = resp.data;
@@ -1137,8 +1137,8 @@ Nova.booting(function (Vue, router, store) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/jcarouth/projects/ziffmedia/laravel-cloudflare/resources/js/tool.js */"./resources/js/tool.js");
-module.exports = __webpack_require__(/*! /Users/jcarouth/projects/ziffmedia/laravel-cloudflare/resources/sass/tool.scss */"./resources/sass/tool.scss");
+__webpack_require__(/*! /Users/denizamado/laravel-cloudflare/resources/js/tool.js */"./resources/js/tool.js");
+module.exports = __webpack_require__(/*! /Users/denizamado/laravel-cloudflare/resources/sass/tool.scss */"./resources/sass/tool.scss");
 
 
 /***/ })
