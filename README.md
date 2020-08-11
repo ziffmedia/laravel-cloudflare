@@ -3,8 +3,8 @@
 
 ```LaravelCloudflare::make()``` in your NovaServiceProvider under tools.
 
-Create congif/cloudflare.php, add Cloudflare email, key, zone values. 
-Add allowable domains in an array as 'domains' in config.
+Create config/cloudflare.php, add Cloudflare email, key, zone values. 
+Add allowable domains in an array as 'domains' in the cloudflare config file.
 
 To install dependencies:
 
