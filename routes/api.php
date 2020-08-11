@@ -27,7 +27,7 @@ Route::post('/purge', function (NovaRequest $request) {
     try {
         $valid_urls = [];
         $nonvalid_urls = [];
-        $domains = Config('cloudflare.domains');
+        $domains = config('cloudflare.domains');
         if ($domains) {
             foreach ($urls as $url) {
                 if (Str::contains($url, $domains)) {
@@ -36,6 +36,8 @@ Route::post('/purge', function (NovaRequest $request) {
                     array_push($nonvalid_urls, $url);
                 }
             }
+        } else {
+            $valid_urls = $urls;
         }
         app(Cloudflare::class)
         ->purgeCacheByUrl($valid_urls);

@@ -13,7 +13,9 @@
 
                 <button type="submit" class="btn btn-default btn-primary block m-auto my-3">Clear Cache</button>
             </form>
-            <p v-if="hasResponse" class="mb-6 mt-1 max-w-lg"><span class="font-bold mt-1 mb-6">RESULTS: </span><span v-if="successMessage" class="success mt-1 mb-6" v-text="successMessage"></span><span v-if="errorMessage" class="error mt-1 mb-6" v-text="errorMessage"></span></p>
+            <p v-if="hasResponse" class="mb-6 mt-1 max-w-lg"><span class="font-bold mt-1 mb-6 text-center">RESULTS: </span></p>
+            <p class="mb-6 mt-1 max-w-lg text-center"><span v-if="successMessage" class="success mt-1 mb-6" v-text="successMessage"></span></p>
+            <p class="mb-6 mt-1 max-w-lg text-center"><span v-if="errorMessage" class="error mt-1 mb-6" v-text="errorMessage"></span></p>
         </card>
     </div>
 </template>
