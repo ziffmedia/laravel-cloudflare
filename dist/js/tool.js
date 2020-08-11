@@ -131,7 +131,7 @@ __webpack_require__.r(__webpack_exports__);
       var request = {
         'urls': urlArray
       };
-      Nova.request().post('/laravel-cloudlflare/purge', request).then(function (resp) {
+      Nova.request().post('nova-vendor/laravel-cloudflare/purge', request).then(function (resp) {
         if (resp.data) {
           self.hasResponse = true;
           self.errorMessage = resp.data;
