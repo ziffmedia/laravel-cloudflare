@@ -25,7 +25,7 @@ Route::post('/purge', function (NovaRequest $request) {
     try {
         app(Cloudflare::class)
         ->purgeCacheByUrl($urls);
-        $message = 'CACHE CLEARED FOR:  '+ implode(", ", $urls) + "!";
+        $message = 'CACHE CLEARED FOR: '. implode(", ", $urls) . ' !';
         $success = true;
     } catch (\Exception $e) {
         $message = $e->getMessage();
