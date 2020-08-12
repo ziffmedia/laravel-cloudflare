@@ -3,7 +3,8 @@
     "description": "A Laravel Nova tool.",
     "keywords": [
         "laravel",
-        "nova"
+        "nova",
+        "cloudflare"
     ],
     "license": "MIT",
     "require": {
