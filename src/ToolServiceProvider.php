@@ -18,7 +18,7 @@ class ToolServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/laravel-cloudflare.php' => config_path('laravel-cloudflare.php'),
+            __DIR__.'/../config/cloudflare.php' => config_path('cloudflare.php'),
         ], 'config');
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-cloudflare');
