@@ -1,10 +1,39 @@
-# Integrate with Cloudflare caching
-```composer require ziffmedia/laravel-cloudflare```
+# Laravel Cloudflare tools
 
-```LaravelCloudflare::make()``` in your NovaServiceProvider under tools.
+A Laravel package with integrated Nova tools for interacting with Cloudflare. 
 
-Create config/cloudflare.php, add Cloudflare email, key, zone values. 
-Add allowable domains in an array as 'domains' in the cloudflare config file.
+## Installation
+
+First you must install the package into your Laravel application. 
+
+```console
+composer require ziffmedia/laravel-cloudflare
+```
+
+### Nova Integration
+
+If you are using the Nova cache purge tools you should register the tool with Nave in your NovaServiceProvider:
+
+```php
+// app/Providers/NovaServiceProvdier.php
+public function tools()
+{
+    return [
+        // ...,
+        new \ZiffMedia\LaravelCloudflare\LaravelCloudflare(),
+    ];
+}
+```
+
+Finally, you need to publish the config file to your application:
+
+```console
+   php artisan vendor:publish --provider="ZiffMedia\LaravelCloudflare\ToolServiceProvider" --tag="config" 
+```
+
+You should include your Cloudflare zone and API keys as env variables.
+
+## Development
 
 To install dependencies:
 

@@ -1,4 +1,7 @@
+<?php
+
 return [
+
     /*
      * Allowed domains for cache clearing tool (in the Nova purge tool.) This
      * is an allow list to prevent sending purge requests for irrelevant domains
@@ -7,6 +10,7 @@ return [
     'domains' => [
         //'example.com',
     ],
+
     /*
      * Cloudflare service configuration, defaults to pull from env or to null values.
      * These values can be pulled from the Cloudflare dashboard for your zone
@@ -14,6 +18,14 @@ return [
     'email' => env('CLOUDFLARE_EMAIL', null),
     'key' => env('CLOUDFLARE_KEY', null),
     'zone' => env('CLOUDFLARE_ZONE', null),
-    'headers_enabled' => env('CLOUDFLARE_HEADERS_ENABLED', true),
-    'purge_enabled'   => env('CLOUDFLARE_PURGE_ENABLED', true),
+
+    /*
+     * Enable features in the base Cloudflare integration.
+     *
+     * headers_enabled: when enabled, sends cache tagging headers with responses
+     * purge_enabled: when enabled, allows all automated and manual purges to send requests to Cloudflare API
+     */
+    'headers_enabled' => env('CLOUDFLARE_HEADERS_ENABLED', false),
+    'purge_enabled'   => env('CLOUDFLARE_PURGE_ENABLED', false),
+
 ];
