@@ -14,4 +14,6 @@ return [
     'email' => env('CLOUDFLARE_EMAIL', null),
     'key' => env('CLOUDFLARE_KEY', null),
     'zone' => env('CLOUDFLARE_ZONE', null),
+    'headers_enabled' => env('CLOUDFLARE_HEADERS_ENABLED', true),
+    'purge_enabled'   => env('CLOUDFLARE_PURGE_ENABLED', true),
 ];
