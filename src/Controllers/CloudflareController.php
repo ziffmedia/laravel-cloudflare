@@ -19,9 +19,8 @@ class CloudflareController extends Controller
 
         if ($validUrls) {
             try {
-                //$cloudflare = new Cloudflare();
-                //$cloudflare->purgeCacheByUrl($validUrls);
-                //Cloudflare::make()->purgeCacheByUrl($validUrls);
+                $cloudflare = new Cloudflare();
+                $cloudflare->purgeCacheByUrl($validUrls);
             } catch (\Exception $e) {
                 $errorMessage = $e->getMessage();
             }

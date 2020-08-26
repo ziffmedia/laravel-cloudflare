@@ -1,52 +1,75 @@
 <template>
-    <div>
-        <heading class="mb-6">Cache Purge</heading>
-
-        <card
-            class="flex flex-col items-center justify-center"
-            style="min-height: 300px"
-        >
-            <form method="post" action='/cache-tool/{urls}' class="mx-auto py-2 w-1/2 h-48" @submit="submitUrl" novalidate="true">
-                <label for="url" class="header-500 block w-9/12 m-auto text-left my-2 font-bold">Input URLs</label>
-
-                <textarea id="purgeurl" type="textarea" v-model="urls" placeholder="Enter URLs here, use <enter> to delimit urls." class="border border-gray-600 border-solid rounded-sm w-full h-full block m-auto my-5 p-3" style="height:10rem;"></textarea>
-
-                <button type="submit" class="btn btn-default btn-primary block m-auto my-3">Clear Cache</button>
-            </form>
-            <p v-if="hasResponse" class="mb-6 mt-1 max-w-lg"><span class="font-bold mt-1 mb-6 text-center">RESULTS: </span></p>
-            <p class="mb-6 mt-1 max-w-lg text-center"><span v-if="successMessage" class="success mt-1 mb-6" v-text="successMessage"></span></p>
-            <p class="mb-6 mt-1 max-w-lg text-center"><span v-if="errorMessage" class="error mt-1 mb-6" v-text="errorMessage"></span></p>
-        </card>
-    </div>
+    <form autocomplete="off" method="post" action="/cache-tool/{urls}" @submit="submitUrls" novalidate="true">
+        <div class="mb-8">
+            <h1 class="mb-3 text-90 font-normal text-2xl">Cache Purge</h1>
+            <div class="card">
+                <div class="flex border-b border-40">
+                    <div class="w-1/5 px-8 py-6">
+                        <label for="purgeUrl" class="inline-block text-80 pt-2 leading-tight">URLs</label>
+                    </div>
+                    <div class="py-6 px-8 w-1/2">
+                        <textarea ref="textInput" id="purgeUrl" type="textarea" v-model="urls" placeholder="https://www.example.com/page" class="w-full form-control form-input form-input-bordered" :class="invalidUrls.length ? 'border-danger' : ''" style="min-height:10rem;"></textarea>
+                        <div v-if="invalidUrlsMessage" class="help-text error-text mt-2 text-danger">{{ invalidUrlsMessage }}</div>
+                        <div class="help-text help-text mt-2">Enter URLs above, use &lt;enter&gt; to delimit URLs.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center justify-end">
+            <button tabindex="0" type="submit" class="btn btn-default btn-primary inline-flex items-center relative">
+                Clear Cache
+            </button>
+        </div>
+    </form>
 </template>
 
 <script>
 export default {
     data() {
         return {
-            errors: [],
             urls: [],
-            errorMessage: null,
-            successMessage: null,
-            hasResponse: false,
+            validUrls: [],
+            invalidUrls: []
+        }
+    },
+    computed: {
+        invalidUrlsMessage: function () {
+            let length = this.invalidUrls.length;
+            return length ? (length === 1 ? '1 URL above is' : length + ' URLs above are') + ' invalid.' : '';
         }
     },
     methods: {
-        submitUrl: function (e) {
+        submitUrls: function (e) {
+            e.preventDefault();
+
+            if (!this.urls.length) { return; }
+
             let urlArray = this.urls.split('\n');
             let self = this;
             let request = {
                 'urls': urlArray
             };
-             Nova.request().post('/nova-vendor/laravel-cloudflare/purge', request)
+
+            Nova.request().post('/nova-vendor/laravel-cloudflare/purge', request)
             .then(resp => {
-                if (resp.data) {
-                    self.hasResponse = true;
-                    self.errorMessage = resp.data[0];
-                    self.successMessage = resp.data[1];
+                self.processResponse(resp);
+            })
+        },
+        processResponse: function(resp) {
+            if (resp.data && resp.data.validUrls) {
+                this.validUrls = resp.data.validUrls;
+                this.invalidUrls = resp.data.invalidUrls;
+
+                if (resp.data.errorMessage) {
+                    this.$toasted.show('Server error: ' + resp.data.errorMessage, { type: 'error' })
+                } else if (this.validUrls.length) {
+                    let message = (this.invalidUrls.length === 0 ? 'All URLs' : (this.validUrls.length === 1 ? '1 URL' : this.validUrls.length + ' URLs')) + ' successfully purged.';
+                    this.$toasted.show(message, { type: 'success' })
+                    this.urls = this.invalidUrls.join('\n');
                 }
-            });
-            e.preventDefault();
+            } else {
+                this.$toasted.show('Server error: response does not have data.', { type: 'error' });
+            }
         }
     }
 }
