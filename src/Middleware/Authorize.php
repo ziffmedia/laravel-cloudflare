@@ -1,6 +1,6 @@
 <?php
 
-namespace ZiffMedia\LaravelCloudflare\Http\Middleware;
+namespace ZiffMedia\LaravelCloudflare\Middleware;
 
 use Laravel\Nova\Nova;
 use ZiffMedia\LaravelCloudflare\LaravelCloudflare;
