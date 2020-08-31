@@ -18,7 +18,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "ZiffMedia\\LaravelCloudflare\\ToolServiceProvider"
+                "ZiffMedia\\LaravelCloudflare\\LaravelCloudflareServiceProvider"
             ]
         }
     },

@@ -8,7 +8,7 @@ use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
 use ZiffMedia\LaravelCloudflare\Middleware\Authorize;
 
-class ToolServiceProvider extends ServiceProvider
+class LaravelCloudflareServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -32,6 +32,7 @@ class ToolServiceProvider extends ServiceProvider
         Nova::serving(function (ServingNova $event) {
             //
         });
+        Nova::script('laravel-cloudflare', __DIR__ . '/../dist/js/index.js');
     }
 
     /**

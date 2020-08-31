@@ -28,7 +28,7 @@ public function tools()
 Finally, you need to publish the config file to your application:
 
 ```console
-   php artisan vendor:publish --provider="ZiffMedia\LaravelCloudflare\ToolServiceProvider" --tag="config" 
+   php artisan vendor:publish --provider="ZiffMedia\LaravelCloudflare\LaravelCloudflareServiceProvider" --tag="config" 
 ```
 
 You should include your Cloudflare zone and API keys as env variables.
