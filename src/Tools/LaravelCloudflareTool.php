@@ -15,7 +15,7 @@ class LaravelCloudflareTool extends Tool
 
     public function boot()
     {
-        Nova::script('laravel-cloudflare', __DIR__ . '/../dist/js/index.js');
+        Nova::script('laravel-cloudflare-tool', __DIR__ . '/../../dist/js/tool.js');
     }
 
     /**

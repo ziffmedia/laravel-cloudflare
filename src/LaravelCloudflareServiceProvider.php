@@ -29,10 +29,10 @@ class LaravelCloudflareServiceProvider extends ServiceProvider
         $this->app->singleton(Cloudflare::class, function () {
             return new Cloudflare(config('cloudflare.zone'), config('cloudflare.email'), config('cloudflare.key'));
         });
+
         Nova::serving(function (ServingNova $event) {
-            //
+            Nova::script('laravel-cloudflare-field', __DIR__ . '/../dist/js/field.js');
         });
-        Nova::script('laravel-cloudflare', __DIR__ . '/../dist/js/index.js');
     }
 
     /**
