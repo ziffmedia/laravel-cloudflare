@@ -12,4 +12,15 @@ class ClearCacheButton extends Field
      * @var string
      */
     public $component = 'cache-clear';
+
+    /**
+     * Set the urls to be purged when button is clicked.
+     *
+     * @param array $urls
+     * @return $this
+     */
+    public function purgeUrls(array $urls)
+    {
+        return $this->withMeta(['urls' => $urls]);
+    }
 }

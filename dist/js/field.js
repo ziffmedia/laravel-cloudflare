@@ -91,24 +91,9 @@
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ClearCacheButton.vue?vue&type=script&lang=js& ***!
   \***************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['label'],
-  methods: {//
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/resources/js/components/ClearCacheButton.vue: Unexpected token, expected \"{\" (78:12)\n\n\u001b[0m \u001b[90m 76 | \u001b[39m        }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 77 | \u001b[39m        purgeError\u001b[33m:\u001b[39m \u001b[36mfunction\u001b[39m (message)\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 78 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39misError \u001b[33m=\u001b[39m \u001b[36mtrue\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 79 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mshowNotification(message\u001b[33m,\u001b[39m \u001b[32m'error'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 80 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39m$emit(\u001b[32m'error'\u001b[39m\u001b[33m,\u001b[39m message)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 81 | \u001b[39m            setTimeout(() \u001b[33m=>\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mreset()\u001b[33m,\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mresetTimeout)\u001b[33m;\u001b[39m\u001b[0m\n    at Parser._raise (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:757:17)\n    at Parser.raiseWithData (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:750:17)\n    at Parser.raise (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:744:17)\n    at Parser.unexpected (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:8834:16)\n    at Parser.expect (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:8820:28)\n    at Parser.parseBlock (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:11749:10)\n    at Parser.parseFunctionBody (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10758:24)\n    at Parser.parseFunctionBodyAndFinish (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10741:10)\n    at withTopicForbiddingContext (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:11925:12)\n    at Parser.withTopicForbiddingContext (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:11085:14)\n    at Parser.parseFunction (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:11924:10)\n    at Parser.parseFunctionExpression (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10217:17)\n    at Parser.parseExprAtom (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10096:21)\n    at Parser.parseExprSubscripts (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9688:23)\n    at Parser.parseMaybeUnary (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9668:21)\n    at Parser.parseExprOps (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9538:23)\n    at Parser.parseMaybeConditional (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9511:23)\n    at Parser.parseMaybeAssign (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9466:21)\n    at Parser.parseObjectProperty (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10636:101)\n    at Parser.parseObjPropValue (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10661:101)\n    at Parser.parseObjectMember (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10585:10)\n    at Parser.parseObj (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10494:25)\n    at Parser.parseExprAtom (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10090:28)\n    at Parser.parseExprSubscripts (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9688:23)\n    at Parser.parseMaybeUnary (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9668:21)\n    at Parser.parseExprOps (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9538:23)\n    at Parser.parseMaybeConditional (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9511:23)\n    at Parser.parseMaybeAssign (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9466:21)\n    at Parser.parseObjectProperty (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10636:101)\n    at Parser.parseObjPropValue (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10661:101)\n    at Parser.parseObjectMember (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10585:10)\n    at Parser.parseObj (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10494:25)\n    at Parser.parseExprAtom (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:10090:28)\n    at Parser.parseExprSubscripts (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9688:23)\n    at Parser.parseMaybeUnary (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9668:21)\n    at Parser.parseExprOps (/Users/erikmarshall/Code/helios/vendor/ziffmedia/laravel-cloudflare/node_modules/@babel/parser/lib/index.js:9538:23)");
 
 /***/ }),
 
@@ -163,29 +148,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     'clear-cache-button': _ClearCacheButton__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['resourceName', 'resourceId', 'field'],
-  methods: {
-    /*
-     * Set the initial, internal value for the field.
-     */
-    setInitialValue: function setInitialValue() {
-      this.value = this.field.value || '';
-    },
-
-    /**
-     * Fill the given FormData object with the field's internal value.
-     */
-    fill: function fill(formData) {
-      formData.append(this.field.attribute, this.value || '');
-    },
-
-    /**
-     * Update the field's internal value.
-     */
-    handleChange: function handleChange(value) {
-      this.value = value;
-    }
-  }
+  props: ['field']
 });
 
 /***/ }),
@@ -204,12 +167,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     'clear-cache-button': _ClearCacheButton__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['resourceName', 'field']
+  props: ['field']
 });
 
 /***/ }),
@@ -232,31 +198,83 @@ var render = function() {
   return _c(
     "button",
     {
+      ref: "button",
       staticClass:
-        "relative btn btn-default px-4 border font-normal border-60 text-80 hover:bg-40 hover:border-70",
-      staticStyle: { "min-width": "58px" }
+        "relative btn btn-default px-4 border font-normal bg-white border-60 text-80 hover:bg-40 hover:border-70",
+      staticStyle: { "min-width": "58px" },
+      on: {
+        click: function($event) {
+          $event.preventDefault()
+          return _vm.purgeCache($event)
+        }
+      }
     },
     [
       _c("div", { staticClass: "absolute h-6", staticStyle: { top: "5px" } }, [
-        _c(
-          "svg",
-          {
-            staticClass: "h-6",
-            attrs: { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 20 20" }
-          },
-          [
-            _c("path", {
-              attrs: {
-                fill: "var(--70)",
-                d:
-                  "M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-              }
-            })
-          ]
-        )
+        _vm.isSuccess
+          ? _c(
+              "svg",
+              {
+                staticClass: "h-5 text-success",
+                attrs: {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  viewBox: "0 0 512 512"
+                }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    fill: "currentColor",
+                    d:
+                      "M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+                  }
+                })
+              ]
+            )
+          : _vm.isError
+          ? _c(
+              "svg",
+              {
+                staticClass: "h-5 text-error",
+                attrs: {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  viewBox: "0 0 352 512"
+                }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    fill: "currentColor",
+                    d:
+                      "M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                  }
+                })
+              ]
+            )
+          : _c(
+              "svg",
+              {
+                staticClass: "h-6",
+                attrs: {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  viewBox: "0 0 20 20"
+                }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    fill: "var(--70)",
+                    d:
+                      "M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                  }
+                })
+              ]
+            )
       ]),
       _vm._v(" "),
-      _c("span", { staticClass: "ml-8" }, [_vm._v("Purge Cache")])
+      _vm.label
+        ? _c("span", { staticClass: "ml-8" }, [_vm._v(_vm._s(_vm.label))])
+        : _vm._e()
     ]
   )
 }
@@ -340,7 +358,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("clear-cache-button")
+  return _c("clear-cache-button", {
+    attrs: { label: "", urls: _vm.field.urls }
+  })
 }
 var staticRenderFns = []
 render._withStripped = true
