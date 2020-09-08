@@ -76,7 +76,10 @@ export default {
                         self.purgeError('Invalid Server Response');
                     }
 
-                    this.isLoading = false;
+                    self.isLoading = false;
+                })
+                .catch(resp => {
+                    self.isLoading = false;
                 })
         },
         purgeSuccess: function(data) {

@@ -57,7 +57,7 @@ class Cloudflare
 
             try {
                 collect($this->tags)->chunk(25)->each(function (Collection $chunk) use ($zone) {
-                    //$zone->cachePurge($this->zone, null, array_values($chunk->toArray()));
+                    $zone->cachePurge($this->zone, null, array_values($chunk->toArray()));
                 });
                 $this->tags = [];
             } catch (\Exception $e) {
@@ -75,7 +75,7 @@ class Cloudflare
         if (Config('cloudflare.purge_enabled')) {
             $zone = $this->getCloudflareZonesEndpoint();
             try {
-                //$zone->cachePurge($this->zone, $urls);
+                $zone->cachePurge($this->zone, $urls);
             } catch (\Exception $e) {
                 logger()->warning($e->getMessage());
 
