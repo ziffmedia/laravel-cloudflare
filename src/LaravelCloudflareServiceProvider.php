@@ -32,6 +32,7 @@ class LaravelCloudflareServiceProvider extends ServiceProvider
 
         Nova::serving(function (ServingNova $event) {
             Nova::script('laravel-cloudflare-field', __DIR__ . '/../dist/js/field.js');
+            Nova::style('laravel-cloudflare-field', __DIR__.'/../dist/css/styles.css');
         });
     }
 
@@ -46,11 +47,11 @@ class LaravelCloudflareServiceProvider extends ServiceProvider
             return;
         }
 
-        Route::middleware(['nova', Authorize::class])
+        Route::middleware(['nova'])
             ->prefix('nova-vendor/laravel-cloudflare')
             ->namespace(__NAMESPACE__ . '\\Controllers')
             ->group(function ($route) {
-                $route->post('/purge', 'CloudflareController@clearCacheWithUrls');
+                $route->post('/purge', 'CloudflareController@clearCache');
             });
     }
 

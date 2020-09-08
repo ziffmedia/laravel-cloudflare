@@ -2,6 +2,7 @@
     <clear-cache-button
         label=""
         :urls="field.urls"
+        :tags="field.tags"
     ></clear-cache-button>
 </template>
 

@@ -1,7 +1,10 @@
 <template>
     <panel-item :field="field">
         <template slot="value">
-            <clear-cache-button></clear-cache-button>
+            <clear-cache-button
+                :urls="field.urls"
+                :tags="field.tags"
+            ></clear-cache-button>
         </template>
     </panel-item>
 </template>
@@ -13,6 +16,6 @@ export default {
     components: {
         'clear-cache-button': ClearCacheButton
     },
-    props: ['resource', 'resourceName', 'resourceId', 'field'],
+    props: ['field'],
 }
 </script>

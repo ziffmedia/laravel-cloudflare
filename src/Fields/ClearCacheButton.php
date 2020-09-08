@@ -23,4 +23,15 @@ class ClearCacheButton extends Field
     {
         return $this->withMeta(['urls' => $urls]);
     }
+
+    /**
+     * Set the header tags to be purged when button is clicked.
+     *
+     * @param array $urls
+     * @return $this
+     */
+    public function purgeTags(array $tags)
+    {
+        return $this->withMeta(['tags' => $tags]);
+    }
 }

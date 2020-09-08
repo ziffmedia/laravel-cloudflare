@@ -1,5 +1,5 @@
 <template>
-    <form autocomplete="off" method="post" action="/cache-tool/{urls}" @submit="submitUrls" novalidate="true">
+    <form autocomplete="off" novalidate="true">
         <div class="mb-8">
             <h1 class="mb-3 text-90 font-normal text-2xl">Cache Purge</h1>
             <div class="card">
@@ -16,19 +16,28 @@
             </div>
         </div>
         <div class="flex items-center justify-end">
-            <button tabindex="0" type="submit" class="btn btn-default btn-primary inline-flex items-center relative">
-                Clear Cache
-            </button>
+            <clear-cache-button
+                tabindex="0"
+                button-type="primary"
+                :urls="urlArray"
+                :notifications="false"
+                @purgeSuccess="success"
+                @purgeError="error"
+            ></clear-cache-button>
         </div>
     </form>
 </template>
 
 <script>
+import ClearCacheButton from './ClearCacheButton'
+
 export default {
+    components: {
+        'clear-cache-button': ClearCacheButton
+    },
     data() {
         return {
             urls: [],
-            validUrls: [],
             invalidUrls: []
         }
     },
@@ -36,40 +45,36 @@ export default {
         invalidUrlsMessage: function () {
             let length = this.invalidUrls.length;
             return length ? (length === 1 ? '1 URL above is' : length + ' URLs above are') + ' invalid.' : '';
+        },
+        urlArray: function () {
+            return this.urls.length ? this.urls.split('\n') : [];
         }
     },
     methods: {
-        submitUrls: function (e) {
-            e.preventDefault();
-
-            if (!this.urls.length) { return; }
-
-            let urlArray = this.urls.split('\n');
-            let self = this;
-            let request = {
-                'urls': urlArray
-            };
-
-            Nova.request().post('/nova-vendor/laravel-cloudflare/purge', request)
-            .then(resp => {
-                self.processResponse(resp);
-            })
-        },
-        processResponse: function(resp) {
-            if (resp.data && resp.data.validUrls) {
-                this.validUrls = resp.data.validUrls;
-                this.invalidUrls = resp.data.invalidUrls;
-
-                if (resp.data.errorMessage) {
-                    this.$toasted.show('Server error: ' + resp.data.errorMessage, { type: 'error' })
-                } else if (this.validUrls.length) {
-                    let message = (this.invalidUrls.length === 0 ? 'All URLs' : (this.validUrls.length === 1 ? '1 URL' : this.validUrls.length + ' URLs')) + ' successfully purged.';
-                    this.$toasted.show(message, { type: 'success' })
-                    this.urls = this.invalidUrls.join('\n');
+        success: function(data) {
+            if (data && data.purgedUrls) {
+                if (data.errorMessage) {
+                    this.error(data.errorMessage)
+                } else {
+                    if (this.urlArray.length === data.purgedUrls.length) {
+                        this.$toasted.show('All URLs purged successfully.', { type: 'success' })
+                        this.invalidUrls = [];
+                    } else {
+                        if (data.purgedUrls.length > 0) {
+                            this.$toasted.show(`${data.purgedUrls.length} URL${data.purgedUrls.length === 1 ? '' : 's'} purged successfully.`, { type: 'success' })
+                        }
+                        if (this.urlArray.length > data.purgedUrls.length) {
+                            this.invalidUrls = this.urlArray.filter(n => !data.purgedUrls.includes(n));
+                            this.urls = this.invalidUrls.join('\n');
+                        }
+                    }
                 }
             } else {
-                this.$toasted.show('Server error: response does not have data.', { type: 'error' });
+                this.error('Server error: response does not have data.')
             }
+        },
+        error: function (message) {
+            this.$toasted.show(message, { type: 'error' });
         }
     }
 }

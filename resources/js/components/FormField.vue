@@ -1,7 +1,10 @@
 <template>
     <default-field :field="field">
         <template slot="field">
-            <clear-cache-button></clear-cache-button>
+            <clear-cache-button
+                :urls="field.urls"
+                :tags="field.tags"
+            ></clear-cache-button>
         </template>
     </default-field>
 </template>
