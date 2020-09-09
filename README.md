@@ -34,7 +34,7 @@ composer require ziffmedia/laravel-cloudflare
 To provide the cache purge Tool in your Nova instance, you must register the Tool with your NovaServiceProvider:
 
 ```php
-// app/Providers/NovaServiceProvdier.php
+// app/Providers/NovaServiceProvider.php
 
 use ZiffMedia\LaravelCloudflare\Tools\LaravelCloudflareTool;
 
@@ -49,7 +49,7 @@ public function tools()
 
 For adding permissions to the Tool, please see the Nova [documentation](https://nova.laravel.com/docs/1.0/customization/tools.html#authorization "Nova Tool Documentation").
 
-Note: The Tool is intended only for urls; setup for Cache Tags is not required if only using url purging.
+Note: The Tool is intended only for urls; setup for Cache Tags is not required if only using the Tool or url purging.
 
 ## Nova Field Integration
 
