@@ -28,22 +28,7 @@ public function tools()
 Finally, you need to publish the config file to your application:
 
 ```console
-   php artisan vendor:publish --provider="ZiffMedia\LaravelCloudflare\LaravelCloudflareServiceProvider" --tag="config" 
+   php artisan vendor:publish --provider="ZiffMedia\LaravelCloudflare\CloudflareServiceProvider" --tag="config" 
 ```
 
 You should include your Cloudflare zone and API keys as env variables.
-
-## Development
-
-To install dependencies:
-
-```shell script
-docker-compose run --rm composer install
-docker-compose run --rm npm install
-```
-
-To compile tool for distribution:
-
-```shell script
-docker-compose run --rm npm run prod
-```
