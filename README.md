@@ -29,7 +29,7 @@ composer require ziffmedia/laravel-cloudflare
 * Provide the new config file your Cloudflare Zone and API keys in your .env files.
 
 
-### Nova Tool Integration
+## Nova Tool Integration
 
 To provide the cache purge Tool in your Nova instance, you must register the Tool with your NovaServiceProvider:
 
@@ -51,7 +51,7 @@ For adding permissions to the Tool, please see the Nova [documentation](https://
 
 Note: The Tool is intended only for urls; setup for Cache Tags is not required if only using url purging.
 
-### Nova Field Integration
+## Nova Field Integration
 
 To provide the Cache Purge button on any resource, you must reference the Field and make sure that you have setup the appropriate purge method (url or Cache Tag).
 
@@ -73,7 +73,7 @@ public function fields(Request $request)
 }
 ```
 
-### Cloudflare Cache-Tag Header Integration
+## Cloudflare Cache-Tag Header Integration
 
 Cloudflare has the ability to use a special Cache-Tag header on requests to purge multiple pages instantly. If you intend to only use url purging, you can skip this step. In order to setup the Cache-Tag header, follow the below steps:
 
@@ -131,7 +131,7 @@ class Article extends Model
 }
 ```
 
-### Config Options
+## Config Options
 
 * `purge_enabled`: Allows for purging to be turned on or off
 * `email`: Email address used for authenticating with Cloudflare API
