@@ -22,10 +22,8 @@ return [
     /*
      * Enable features in the base Cloudflare integration.
      *
-     * headers_enabled: when enabled, sends cache tagging headers with responses
      * purge_enabled: when enabled, allows all automated and manual purges to send requests to Cloudflare API
      */
-    'headers_enabled' => env('CLOUDFLARE_HEADERS_ENABLED', false),
     'purge_enabled'   => env('CLOUDFLARE_PURGE_ENABLED', false),
 
 ];
