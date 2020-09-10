@@ -24,7 +24,6 @@ class Cloudflare
         $this->zone = $zone;
         $this->email = $email;
         $this->key = $key;
-
     }
 
     public function addTag(string $tag)
@@ -74,6 +73,7 @@ class Cloudflare
     {
         if (Config('cloudflare.purge_enabled')) {
             $zone = $this->getCloudflareZonesEndpoint();
+
             try {
                 $zone->cachePurge($this->zone, $urls);
             } catch (\Exception $e) {

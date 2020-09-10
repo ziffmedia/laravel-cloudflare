@@ -12,11 +12,10 @@ class LaravelCloudflareTool extends Tool
      *
      * @return void
      */
-
     public function boot()
     {
         Nova::script('laravel-cloudflare-tool', __DIR__ . '/../../dist/js/tool.js');
-        Nova::style('laravel-cloudflare-tool', __DIR__.'/../../dist/css/styles.css');
+        Nova::style('laravel-cloudflare-tool', __DIR__ . '/../../dist/css/styles.css');
     }
 
     /**
