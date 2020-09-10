@@ -8,7 +8,7 @@ use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
 use ZiffMedia\LaravelCloudflare\Middleware\Authorize;
 
-class ToolServiceProvider extends ServiceProvider
+class CloudflareServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -29,8 +29,10 @@ class ToolServiceProvider extends ServiceProvider
         $this->app->singleton(Cloudflare::class, function () {
             return new Cloudflare(config('cloudflare.zone'), config('cloudflare.email'), config('cloudflare.key'));
         });
+
         Nova::serving(function (ServingNova $event) {
-            //
+            Nova::script('laravel-cloudflare-field', __DIR__ . '/../dist/js/field.js');
+            Nova::style('laravel-cloudflare-field', __DIR__.'/../dist/css/styles.css');
         });
     }
 
@@ -45,11 +47,11 @@ class ToolServiceProvider extends ServiceProvider
             return;
         }
 
-        Route::middleware(['nova', Authorize::class])
+        Route::middleware(['nova'])
             ->prefix('nova-vendor/laravel-cloudflare')
             ->namespace(__NAMESPACE__ . '\\Controllers')
             ->group(function ($route) {
-                $route->post('/purge', 'CloudflareController@clearCacheWithUrls');
+                $route->post('/purge', 'CloudflareController@clearCache');
             });
     }
 

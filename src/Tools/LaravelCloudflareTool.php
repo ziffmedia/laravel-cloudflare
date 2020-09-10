@@ -1,11 +1,11 @@
 <?php
 
-namespace ZiffMedia\LaravelCloudflare;
+namespace ZiffMedia\LaravelCloudflare\Tools;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
-class LaravelCloudflare extends Tool
+class LaravelCloudflareTool extends Tool
 {
     /**
      * Perform any tasks that need to happen when the tool is booted.
@@ -15,7 +15,8 @@ class LaravelCloudflare extends Tool
 
     public function boot()
     {
-        Nova::script('laravel-cloudflare', __DIR__.'/../dist/js/tool.js');
+        Nova::script('laravel-cloudflare-tool', __DIR__ . '/../../dist/js/tool.js');
+        Nova::style('laravel-cloudflare-tool', __DIR__.'/../../dist/css/styles.css');
     }
 
     /**

@@ -10,23 +10,30 @@ use ZiffMedia\LaravelCloudflare\Cloudflare;
 
 class CloudflareController extends Controller
 {
-    public function clearCacheWithUrls(NovaRequest $request)
+    public function clearCache(NovaRequest $request)
     {
         $urls = $request->input('urls', []);
+        $tags = $request->input('tags', []);
         $validUrls = $this->validUrls($urls);
-        $nonValidUrls = array_diff($urls, $validUrls);
         $errorMessage = null;
 
         if ($validUrls) {
             try {
-                $cloudflare = new Cloudflare();
-                $cloudflare->purgeCacheByUrl($validUrls);
+                app(Cloudflare::class)->purgeCacheByUrls($validUrls);
             } catch (\Exception $e) {
                 $errorMessage = $e->getMessage();
             }
         }
 
-        return ['validUrls' => $validUrls, 'invalidUrls' => $nonValidUrls, 'errorMessage' => $errorMessage];
+        if ($tags) {
+            try {
+                app(Cloudflare::class)->setTags($tags)->purgeCacheByTags();
+            } catch (\Exception $e) {
+                $errorMessage = $e->getMessage();
+            }
+        }
+
+        return ['purgedUrls' => $validUrls, 'purgedTags' => $tags, 'errorMessage' => $errorMessage];
     }
 
     private function validUrls(Array $urls) {
