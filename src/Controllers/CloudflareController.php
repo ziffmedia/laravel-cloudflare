@@ -2,7 +2,6 @@
 
 namespace ZiffMedia\LaravelCloudflare\Controllers;
 
-
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -36,11 +35,12 @@ class CloudflareController extends Controller
         return ['purgedUrls' => $validUrls, 'purgedTags' => $tags, 'errorMessage' => $errorMessage];
     }
 
-    private function validUrls(Array $urls) {
+    private function validUrls(array $urls)
+    {
         $domains = config('cloudflare.domains');
 
         if ($domains) {
-            return array_values(array_filter( $urls, function( $url ) use ( $domains ) {
+            return array_values(array_filter($urls, function ($url) use ($domains) {
                 return Str::contains($url, $domains);
             }));
         }
@@ -48,4 +48,3 @@ class CloudflareController extends Controller
         return $urls;
     }
 }
-

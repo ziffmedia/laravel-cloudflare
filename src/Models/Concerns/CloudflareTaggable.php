@@ -14,7 +14,7 @@ trait CloudflareTaggable
     public function cloudflareTagsToClear() : array
     {
         $tagsToClear = [
-            $this->cloudflareTag()
+            $this->cloudflareTag(),
         ];
 
         return $tagsToClear;

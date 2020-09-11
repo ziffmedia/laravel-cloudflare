@@ -16,8 +16,8 @@ return [
      * These values can be pulled from the Cloudflare dashboard for your zone
      */
     'email' => env('CLOUDFLARE_EMAIL', null),
-    'key' => env('CLOUDFLARE_KEY', null),
-    'zone' => env('CLOUDFLARE_ZONE', null),
+    'key'   => env('CLOUDFLARE_KEY', null),
+    'zone'  => env('CLOUDFLARE_ZONE', null),
 
     /*
      * Enable features in the base Cloudflare integration.

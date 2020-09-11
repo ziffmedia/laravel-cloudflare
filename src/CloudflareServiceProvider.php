@@ -18,10 +18,10 @@ class CloudflareServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/cloudflare.php' => config_path('cloudflare.php'),
+            __DIR__ . '/../config/cloudflare.php' => config_path('cloudflare.php'),
         ], 'config');
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-cloudflare');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-cloudflare');
 
         $this->app->booted(function () {
             $this->routes();
@@ -32,7 +32,7 @@ class CloudflareServiceProvider extends ServiceProvider
 
         Nova::serving(function (ServingNova $event) {
             Nova::script('laravel-cloudflare-field', __DIR__ . '/../dist/js/field.js');
-            Nova::style('laravel-cloudflare-field', __DIR__.'/../dist/css/styles.css');
+            Nova::style('laravel-cloudflare-field', __DIR__ . '/../dist/css/styles.css');
         });
     }
 
