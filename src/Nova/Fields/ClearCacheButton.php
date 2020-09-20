@@ -1,6 +1,6 @@
 <?php
 
-namespace ZiffMedia\LaravelCloudflare\Fields;
+namespace ZiffMedia\LaravelCloudflare\Nova\Fields;
 
 use Laravel\Nova\Fields\Field;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace ZiffMedia\LaravelCloudflare\Tools;
+namespace ZiffMedia\LaravelCloudflare\Nova\Tools;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;

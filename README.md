@@ -36,7 +36,7 @@ To provide the cache purge Tool in your Nova instance, you must register the Too
 ```php
 // app/Providers/NovaServiceProvider.php
 
-use ZiffMedia\LaravelCloudflare\Tools\LaravelCloudflareTool;
+use ZiffMedia\LaravelCloudflare\Nova\Tools\LaravelCloudflareTool;
 
 public function tools()
 {
@@ -58,7 +58,7 @@ To provide the Cache Purge button on any resource, you must reference the Field 
 ```php
 // app/Nova/
 
-use ZiffMedia\LaravelCloudflare\Fields\ClearCacheButton;
+use ZiffMedia\LaravelCloudflare\Nova\Fields\ClearCacheButton;
 
 public function fields(Request $request)
 {
@@ -115,6 +115,7 @@ class ArticleController extends Controller
                 
         return view(...);
     }
+}
 ```
 
 * Add the Cloudflare model concern to tell the headers which tag to use for a model. Additionally, the `cloudflareTagsToClear` and `cloudflareTag` methods can be overwritten to allow for customization of tags or purging of additional resources. Here is a basic example implementation for an Article model:
