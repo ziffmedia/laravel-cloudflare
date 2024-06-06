@@ -3,4 +3,5 @@
 /vendor
 composer.lock
 composer.phar
-
+/demo
+/docker-compose.yml

@@ -36,13 +36,13 @@ To provide the cache purge Tool in your Nova instance, you must register the Too
 ```php
 // app/Providers/NovaServiceProvider.php
 
-use ZiffMedia\LaravelCloudflare\Nova\Tools\LaravelCloudflareTool;
+use ZiffMedia\LaravelCloudflare\Nova\CloudflareTool;
 
 public function tools()
 {
     return [
         // ...,
-        LaravelCloudflareTool::make()
+        CloudflareTool::make()
     ];
 }
 ```
@@ -51,48 +51,48 @@ For adding permissions to the Tool, please see the Nova [documentation](https://
 
 Note: The Tool is intended only for urls; setup for Cache Tags is not required if only using the Tool or url purging.
 
-## Nova Field Integration
+## Nova Action Integration
 
-To provide the Cache Purge button on any resource, you must reference the Field and make sure that you have setup the appropriate purge method (url or Cache Tag).
+To provide the Cache Purge Action on any resource, add the Action:
 
 ```php
 // app/Nova/
 
-use ZiffMedia\LaravelCloudflare\Nova\Fields\ClearCacheButton;
+use ZiffMedia\LaravelCloudflare\Nova\CloudflareClearCacheAction;
 
-public function fields(Request $request)
+public function actions(NovaRequest $request)
 {
-    ClearCacheButton::make('Cloudflare Cache')
-        ->purgeUrls(
-            ['https://www.example.com', 'https://www.example.com/page']
-        )
-        ->purgeTags(function () {
-            return $this->cloudflareTagsToClear(); // In order to use this method, you must setup Cache Tags (see below)
-        })
-        ->hideWhenCreating()
+    return [
+        CloudflareClearCacheAction::make()
+    ];
 }
 ```
 
 ## Cloudflare Cache-Tag Header Integration
 
-Cloudflare has the ability to use a special Cache-Tag header on requests to purge multiple pages instantly. If you intend to only use url purging, you can skip this step. In order to setup the Cache-Tag header, follow the below steps:
+Cloudflare has the ability to use a special Cache-Tag header on requests to purge multiple pages instantly.
+If you intend to only use url purging, you can skip this step. In order to setup the Cache-Tag header,
+follow the below steps:
 
-* Add the Cloudflare Cache-Tag middleware to automatically add the Cache-Tag header to all requests. Because Cloudflare automatically removes the headers, you can use `debug_cache_tags=1` in the querystring of requests to see the output of the header.
+Add the Cloudflare Cache-Tag middleware to automatically add the Cache-Tag header to all requests. Because
+Cloudflare automatically removes the headers, you can use `debug_cache_tags=1` in the querystring of requests
+to see the output of the header.
 
 ```php
 // app/Http/Kernel.php
 
-use ZiffMedia\LaravelCloudflare\Middleware\CloudflareTagHeaders;
+use ZiffMedia\LaravelCloudflare\Middleware\AddCloudflareCacheTags;
 
 protected $middlewareGroups = [
     'web' => [
         // ...
-        CloudflareTagHeaders::class,
+        AddCloudflareCacheTags::class,
     ]
 ];
 ```
 
-* Add the Cloudflare controller concern to tell the page which tags to give the header request. Here is an example implementation for an Article resource:
+Add the Cloudflare controller concern to tell the page which tags to give the header request. Here is an
+example implementation for an Article resource:
 
 ```php
 // app/Http/Controllers/ArticleController.php
@@ -101,33 +101,27 @@ use ZiffMedia\LaravelCloudflare\Controllers\Concerns\CloudflareTaggable;
 
 class ArticleController extends Controller
 {
-    use CloudflareTaggable;
-
-    public function index()
+    public function index(Foo $foo)
     {
-        // For a collection of models
-        $articles = Article::get();
-        $this->addCloudflareTagsFromCollection($articles); // This will add a tag to the page for each model in the collection
-        
-        // For a single model
-        $article = Article::first();
-        $this->addCloudflareTagFromModel($article); // This will add a tag to the page for a single model
-                
-        return view(...);
+        cloudflare()->addResponseTaggable($foo);
+
+        return view('foo', compact('foo'));
     }
 }
 ```
 
-* Add the Cloudflare model concern to tell the headers which tag to use for a model. Additionally, the `cloudflareTagsToClear` and `cloudflareTag` methods can be overwritten to allow for customization of tags or purging of additional resources. Here is a basic example implementation for an Article model:
+Add the Cloudflare model concern to tell the headers which tag to use for a model. Additionally, the
+`cloudflareTagsToClear` and `cloudflareTag` methods can be overwritten to allow for customization of
+tags or purging of additional resources. Here is a basic example implementation for an Article model:
 
 ```php
 // app/Models/Article.php
 
-use ZiffMedia\LaravelCloudflare\Models\Concerns\CloudflareTaggable;
+use ZiffMedia\LaravelCloudflare\Eloquent\HasCloudflareTagging;
 
 class Article extends Model
 {
-    use CloudflareTaggable;
+    use HasCloudflareTagging;
     // ...   
 }
 ```

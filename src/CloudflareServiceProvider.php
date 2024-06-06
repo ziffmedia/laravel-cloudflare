@@ -2,20 +2,23 @@
 
 namespace ZiffMedia\LaravelCloudflare;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
-use ZiffMedia\LaravelCloudflare\Middleware\Authorize;
+use ZiffMedia\LaravelCloudflare\Nova\CloudflareController;
 
 class CloudflareServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function register(): void
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/cloudflare.php', 'cloudflare'
+        );
+    }
+
+    public function boot(): void
     {
         $this->publishes([
             __DIR__ . '/../config/cloudflare.php' => config_path('cloudflare.php'),
@@ -23,45 +26,49 @@ class CloudflareServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-cloudflare');
 
-        $this->app->booted(function () {
-            $this->routes();
-        });
-        $this->app->singleton(Cloudflare::class, function () {
-            return new Cloudflare(config('cloudflare.zone'), config('cloudflare.email'), config('cloudflare.key'));
-        });
+        [
+            'zone' => $zone,
+            'email' => $email,
+            'key' => $key,
+        ] = config('cloudflare');
 
-        Nova::serving(function (ServingNova $event) {
-            Nova::script('laravel-cloudflare-field', __DIR__ . '/../dist/js/field.js');
-            Nova::style('laravel-cloudflare-field', __DIR__ . '/../dist/css/styles.css');
-        });
-    }
+        $this->app->singleton(Cloudflare::class, fn () => new Cloudflare());
 
-    /**
-     * Register the tool's routes.
-     *
-     * @return void
-     */
-    protected function routes()
-    {
-        if ($this->app->routesAreCached()) {
-            return;
+        // check to see if the API is callable
+        if (! ($email && $key && $zone)) {
+            logger()->warning('Disabling Cloudflare API calls, no email and key were provided for Cloudflare API');
+
+            // fake the API calls
+            Http::macro(
+                'cloudflare',
+                fn () => Http::fake(function ($request) {
+                    logger()->info('Fake Cloudflare API Request', ['url' => $request->url(), 'data' => $request->data()]);
+
+                    return Http::response('Fake Cloudflare API Request');
+                })
+            );
+        } else {
+            // real the API calls
+            Http::macro(
+                'cloudflare',
+                fn () => Http::withHeaders(['X-Auth-Email' => $email, 'X-Auth-Key' => $key])
+                    ->baseUrl('https://api.cloudflare.com/client/v4/zones/' . ($zone ?? 'no-zone-provided'))
+            );
         }
 
-        Route::middleware(['nova'])
-            ->prefix('nova-vendor/laravel-cloudflare')
-            ->namespace(__NAMESPACE__ . '\\Controllers')
-            ->group(function ($route) {
-                $route->post('/purge', 'CloudflareController@clearCache');
-            });
-    }
+        Nova::router(['nova'], 'cloudflare')
+            ->group(fn ($router) => $router->get('/', fn () => inertia('CloudflareTool')));
 
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
+        Route::middleware(['nova'])
+            ->prefix('nova-vendor/cloudflare')
+            ->namespace(__NAMESPACE__ . '\\Controllers')
+            ->group(function ($router) {
+                $router->post('/purge-cache-tags', [CloudflareController::class, 'purgeCacheTags']);
+                $router->post('/purge-urls', [CloudflareController::class, 'purgeUrls']);
+            });
+
+        Nova::serving(function () {
+            Nova::script('cloudflare', __DIR__ . '/../dist/js/cloudflare.js');
+        });
     }
 }

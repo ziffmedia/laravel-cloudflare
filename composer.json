@@ -1,6 +1,6 @@
 {
     "name": "ziffmedia/laravel-cloudflare",
-    "description": "A Laravel Nova tool.",
+    "description": "Cloudflare tagging for eloquent models and middleware, purging via Nova.",
     "keywords": [
         "laravel",
         "nova",
@@ -8,13 +8,19 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=7.1.0",
-        "cloudflare/sdk": "^1.1"
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "laravel/nova": "^4.0"
     },
     "autoload": {
         "psr-4": {
             "ZiffMedia\\LaravelCloudflare\\": "src/"
-        }
+        },
+        "files": [
+            "src/functions.php"
+        ]
     },
     "extra": {
         "laravel": {
@@ -27,8 +33,5 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16"
-    }
+    "prefer-stable": true
 }
