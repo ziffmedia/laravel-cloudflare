@@ -8,19 +8,12 @@ trait HasCloudflareTagging
 {
     public function cloudflareTag(): string
     {
-        $name = Str::of(get_called_class())
+        $name = Str::of(get_class($this))
             ->classBasename()
             ->plural()
             ->snake('-')
             ->toString();
 
-        return $name . '-' . $this->getKey();
-    }
-
-    public function cloudflareTagsToClear(): array
-    {
-        return [
-            $this->cloudflareTag(),
-        ];
+        return $name.'-'.$this->getKey();
     }
 }

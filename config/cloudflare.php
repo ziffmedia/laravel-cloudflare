@@ -16,8 +16,8 @@ return [
      * These values can be pulled from the Cloudflare dashboard for your zone
      */
     'email' => env('CLOUDFLARE_EMAIL', null),
-    'key'   => env('CLOUDFLARE_KEY', null),
-    'zone'  => env('CLOUDFLARE_ZONE', null),
+    'key' => env('CLOUDFLARE_KEY', null),
+    'zone' => env('CLOUDFLARE_ZONE', null),
 
     /*
      * Enable features in the base Cloudflare integration.
@@ -31,5 +31,5 @@ return [
      * included in the response from the Cloudflare API. This can be useful for debugging
      * API responses.
      */
-    'allow_header_debugging' => env('CLOUDFLARE_ALLOW_HEADER_DEBUGGING', false)
+    'allow_header_debugging' => env('CLOUDFLARE_ALLOW_HEADER_DEBUGGING', false),
 ];

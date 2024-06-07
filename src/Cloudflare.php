@@ -58,7 +58,7 @@ class Cloudflare
         $cacheTags = Arr::wrap($cacheTags);
 
         if (! config('cloudflare.purge_enabled')) {
-            logger()->info('Cloudflare::purgeCacheByCacheTags requested but purge is not enabled, purging tags: ' . implode(',', $cacheTags));
+            logger()->info('Cloudflare::purgeCacheByCacheTags requested but purge is not enabled, purging tags: '.implode(',', $cacheTags));
 
             return $this;
         }
@@ -73,7 +73,7 @@ class Cloudflare
     public function purgeCacheByUrls(array $urls): static
     {
         if (! config('cloudflare.purge_enabled')) {
-            logger()->info('Cloudflare::purgeCacheByUrls requested but purge is not enabled, urls: ' . implode(', ', $urls));
+            logger()->info('Cloudflare::purgeCacheByUrls requested but purge is not enabled, urls: '.implode(', ', $urls));
 
             return $this;
         }
@@ -96,7 +96,7 @@ class Cloudflare
                 return $taggable->cloudflareTag();
             }
 
-            return strtolower(Str::slug($taggable->getTable()) . '-' . $taggable->getKey());
+            return strtolower(Str::slug($taggable->getTable()).'-'.$taggable->getKey());
         }
 
         throw new RuntimeException("Provided ($taggable) could not be converted to a Cloudflare Cache-Tag string");

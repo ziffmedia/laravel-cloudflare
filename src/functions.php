@@ -3,7 +3,8 @@
 use ZiffMedia\LaravelCloudflare\Cloudflare;
 
 if (! function_exists('cloudflare')) {
-    function cloudflare(): Cloudflare {
+    function cloudflare(): Cloudflare
+    {
         $cloudflare = app(Cloudflare::class);
 
         if (func_num_args() === 0) {
