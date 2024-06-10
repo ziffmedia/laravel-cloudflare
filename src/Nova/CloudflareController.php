@@ -21,15 +21,6 @@ class CloudflareController extends Controller
     public function purgeUrls(NovaRequest $request): JsonResponse
     {
         $urls = $request->input('urls', []);
-        // $urls = explode("\n", $urlString);
-
-        $domains = config('cloudflare.domains');
-
-        if ($domains) {
-            $urls = array_values(array_filter($urls, function ($url) use ($domains) {
-                return Str::contains($url, $domains);
-            }));
-        }
 
         cloudflare()->purgeCacheByUrls($urls);
 

@@ -3,20 +3,35 @@
 return [
 
     /*
-     * Allowed domains for cache clearing tool (in the Nova purge tool.) This
-     * is an allow list to prevent sending purge requests for irrelevant domains
-     * to the Cloudflare API.
+     * Cloudflare auth configuration, this can be set to any of the following:
+     * - email and key
+     * - user_service_key
+     * - token
+     * @see https://developers.cloudflare.com/api/
+     * @see https://developers.cloudflare.com/api/tokens/create
      */
-    'domains' => [
-        // 'example.com',
+    'auth' => [
+        /*
+         * Email + Key Auth
+         */
+        'email' => env('CLOUDFLARE_AUTH_EMAIL', null),
+        'key' => env('CLOUDFLARE_AUTH_KEY', null),
+
+        /*
+         * User Service Key Auth
+         */
+        'user_service_key' => env('CLOUDFLARE_AUTH_USER_SERVICE_KEY', null),
+
+        /*
+         * Token Auth
+         */
+        'token' => env('CLOUDFLARE_AUTH_TOKEN', null),
     ],
 
     /*
-     * Cloudflare service configuration, defaults to pull from env or to null values.
-     * These values can be pulled from the Cloudflare dashboard for your zone
+     * Cloudflare zone ID, this is required for all requests to the Cloudflare API.
+     * Can be found in your dashboard on the right rail.
      */
-    'email' => env('CLOUDFLARE_EMAIL', null),
-    'key' => env('CLOUDFLARE_KEY', null),
     'zone' => env('CLOUDFLARE_ZONE', null),
 
     /*

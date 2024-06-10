@@ -13,7 +13,7 @@
           id="purgeUrl"
           type="textarea"
           v-model="urlsString"
-          placeholder="https://www.example.com/page"
+          placeholder="www.example.com/page (don't include http:// or https://)"
           class="w-full form-control form-input form-input-bordered"
           :class="invalidUrls.length ? 'border-danger' : ''"
           style="min-height:10rem;"

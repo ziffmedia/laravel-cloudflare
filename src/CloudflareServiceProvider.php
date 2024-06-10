@@ -26,15 +26,31 @@ class CloudflareServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-cloudflare');
 
         [
-            'zone' => $zone,
-            'email' => $email,
-            'key' => $key,
-        ] = config('cloudflare');
+            'email' => $authEmail,
+            'key' => $authKey,
+            'user_service_key' => $authUserServiceKey,
+            'token' => $authToken,
+        ] = config('cloudflare.auth');
+
+        $authHeaders = match(true) {
+            $authEmail && $authKey => ['X-Auth-Email' => $authEmail, 'X-Auth-Key' => $authKey],
+            $authUserServiceKey && true => ['X-Auth-User-Service-Key' => $authUserServiceKey],
+            $authToken && true => ['Authorization' => 'Bearer '.$authToken],
+            default => null
+        };
+
+        $zone = config('cloudflare.zone');
 
         $this->app->singleton(Cloudflare::class, fn () => new Cloudflare());
 
         // check to see if the API is callable
-        if (! ($email && $key && $zone)) {
+        if ($authHeaders && $zone) {
+            Http::macro(
+                'cloudflare',
+                fn () => Http::withHeaders($authHeaders)
+                    ->baseUrl('https://api.cloudflare.com/client/v4/zones/'.($zone ?? 'no-zone-provided'))
+            );
+        } else {
             // fake the API calls
             Http::macro(
                 'cloudflare',
@@ -43,13 +59,6 @@ class CloudflareServiceProvider extends ServiceProvider
 
                     return Http::response('Fake Cloudflare API Request');
                 })
-            );
-        } else {
-            // real the API calls
-            Http::macro(
-                'cloudflare',
-                fn () => Http::withHeaders(['X-Auth-Email' => $email, 'X-Auth-Key' => $key])
-                    ->baseUrl('https://api.cloudflare.com/client/v4/zones/'.($zone ?? 'no-zone-provided'))
             );
         }
 
