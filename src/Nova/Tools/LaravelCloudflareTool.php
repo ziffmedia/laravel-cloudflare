@@ -2,6 +2,7 @@
 
 namespace ZiffMedia\LaravelCloudflare\Nova\Tools;
 
+use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
@@ -26,5 +27,10 @@ class LaravelCloudflareTool extends Tool
     public function renderNavigation()
     {
         return view('laravel-cloudflare::navigation');
+    }
+
+    public function menu(Request $request)
+    {
+        return MenuSection::make('Cache Purge')->path('/laravel-cloudflare');
     }
 }
