@@ -5,7 +5,6 @@ namespace ZiffMedia\LaravelCloudflare\Nova\Tools;
 use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
-use Illuminate\Http\Request;
 
 class LaravelCloudflareTool extends Tool
 {
@@ -30,7 +29,7 @@ class LaravelCloudflareTool extends Tool
         return view('laravel-cloudflare::navigation');
     }
 
-    public function menu(Request $request)
+    public function menu($request)
     {
         return MenuSection::make('Cache Purge')->path('/laravel-cloudflare');
     }
