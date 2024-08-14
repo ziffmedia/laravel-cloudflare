@@ -96,7 +96,7 @@ export default {
         },
         showNotification: function(message, type) {
             if (this.notifications) {
-                this.$toasted.show(message, { type: type });
+                Nova.success(message, { type: type });
             }
         },
         reset: function() {

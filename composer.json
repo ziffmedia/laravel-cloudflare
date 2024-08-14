@@ -9,8 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "cloudflare/sdk": "^1.1",
-        "skoyah/nova-toasted": "^0.1.0"
+        "cloudflare/sdk": "^1.1"
     },
     "autoload": {
         "psr-4": {
