@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=7.1.0",
+        "php": "^7.3|^8.0",
         "cloudflare/sdk": "^1.1"
     },
     "autoload": {
@@ -26,9 +26,17 @@
     "config": {
         "sort-packages": true
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.packagist.com/ziffdavis/"
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "laravel/framework": "^11.20",
+        "laravel/nova": "^4.35",
+        "laravel/pint": "^1.17"
     }
 }

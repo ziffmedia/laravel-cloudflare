@@ -1,3 +1,4 @@
-Nova.booting((Vue) => {
-    Nova.inertia("LaravelCloudflare", require(".//components/Tool").default);
-});
+import Tool from './components/Tool'
+Nova.booting((app, store) => {
+    Nova.inertia('LaravelCloudflare', Tool)
+})

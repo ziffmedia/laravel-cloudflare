@@ -8,10 +8,10 @@ trait CloudflareTaggable
 {
     public function cloudflareTag()
     {
-        return Str::slug($this->getTable()) . '_' . $this->getKey();
+        return Str::slug($this->getTable()).'_'.$this->getKey();
     }
 
-    public function cloudflareTagsToClear() : array
+    public function cloudflareTagsToClear(): array
     {
         $tagsToClear = [
             $this->cloudflareTag(),

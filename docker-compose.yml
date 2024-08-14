@@ -3,7 +3,7 @@ version: '3'
 services:
 
   web:
-    image: ziffmedia-docker.jfrog.io/ziffmedia/laravel:2.2.1
+    image: ziffmedia-docker.jfrog.io/ziffmedia/laravel:2.2.6
     environment:
       APP_ENV: local
       APP_NAME: laravel-cloudflare
