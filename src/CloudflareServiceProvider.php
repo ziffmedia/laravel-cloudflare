@@ -46,7 +46,7 @@ class CloudflareServiceProvider extends ServiceProvider
             return;
         }
 
-        Nova::router(['nova', Authenticate::class, Authorize::class], 'redirect-uploader')
+        Nova::router(['nova', Authenticate::class, Authorize::class], 'laravel-cloudflare')
             ->group(__DIR__.'/../routes/inertia.php');
 
         Route::middleware(['nova', Authorize::class])

@@ -8,4 +8,4 @@ mix
     .js('resources/js/field.js', 'js')
     .vue({ version: 3 })
     .styles('resources/css/styles.css', 'dist/css/styles.css')
-    .nova('helios/redirect-uploader')
+    .nova('ziffmedia/laravel-cloudflare')
