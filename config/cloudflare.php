@@ -17,6 +17,7 @@ return [
      */
     'email' => env('CLOUDFLARE_EMAIL', null),
     'key'   => env('CLOUDFLARE_KEY', null),
+    'token'   => env('CLOUDFLARE_TOKEN', null),
     'zone'  => env('CLOUDFLARE_ZONE', null),
 
     /*

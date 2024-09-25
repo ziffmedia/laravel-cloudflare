@@ -4,6 +4,7 @@ namespace ZiffMedia\LaravelCloudflare;
 
 use Cloudflare\API\Adapter\Guzzle;
 use Cloudflare\API\Auth\APIKey;
+use Cloudflare\API\Auth\APIToken;
 use Cloudflare\API\Endpoints\Zones;
 use Illuminate\Support\Collection;
 
@@ -14,16 +15,18 @@ class Cloudflare
 
     protected $email;
     protected $key;
+    protected $token;
     protected $zone;
 
     /** @var Zones */
     protected $zonesEndpoint;
 
-    public function __construct($zone, $email, $key)
+    public function __construct($zone, $email, $key, $token)
     {
         $this->zone = $zone;
         $this->email = $email;
         $this->key = $key;
+        $this->token = $token;
     }
 
     public function addTag(string $tag)
@@ -91,7 +94,7 @@ class Cloudflare
         if (null === $this->zonesEndpoint) {
             $this->zonesEndpoint = new Zones(
                 new Guzzle(
-                    new APIKey($this->email, $this->key)
+                    isset($this->token) ? new APIToken($this->token) : new APIKey($this->email, $this->key)
                 )
             );
         }
