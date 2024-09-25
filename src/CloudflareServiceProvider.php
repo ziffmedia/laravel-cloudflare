@@ -26,7 +26,7 @@ class CloudflareServiceProvider extends ServiceProvider
             $this->routes();
         });
         $this->app->singleton(Cloudflare::class, function () {
-            return new Cloudflare(config('cloudflare.zone'), config('cloudflare.email'), config('cloudflare.key'));
+            return new Cloudflare(config('cloudflare.zone'), config('cloudflare.email'), config('cloudflare.key'), config('cloudflare.token'));
         });
 
         Nova::serving(function (ServingNova $event) {
