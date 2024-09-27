@@ -16,11 +16,7 @@ class Cloudflare
     protected $email;
 
     protected $key;
-<<<<<<< HEAD
-
-=======
     protected $token;
->>>>>>> 48b01d4 (cloudflare token support (#42))
     protected $zone;
 
     /** @var Zones */
