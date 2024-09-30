@@ -14,6 +14,7 @@ class Cloudflare
     protected $tags = [];
 
     protected $email;
+
     protected $key;
     protected $token;
     protected $zone;
@@ -39,9 +40,6 @@ class Cloudflare
         return $this->tags;
     }
 
-    /**
-     * @param array $tags
-     */
     public function setTags(array $tags)
     {
         $this->tags = $tags;
@@ -63,12 +61,12 @@ class Cloudflare
                 });
                 $this->tags = [];
             } catch (\Exception $e) {
-                logger()->warning('Cloudflare::purgeCacheByTags failed, tags=' . implode(',', $this->tags) . ' - code=' . $e->getCode() . ' - message=' . str_replace("\n", '', (string) $e->getMessage()));
+                logger()->warning('Cloudflare::purgeCacheByTags failed, tags='.implode(',', $this->tags).' - code='.$e->getCode().' - message='.str_replace("\n", '', (string) $e->getMessage()));
 
                 throw $e;
             }
         } else {
-            logger()->info('Cloudflare::purgeCacheByTags requested but purge is not enabled - tags=' . implode(',', $this->tags));
+            logger()->info('Cloudflare::purgeCacheByTags requested but purge is not enabled - tags='.implode(',', $this->tags));
         }
     }
 
@@ -91,7 +89,7 @@ class Cloudflare
 
     public function getCloudflareZonesEndpoint()
     {
-        if (null === $this->zonesEndpoint) {
+        if ($this->zonesEndpoint === null) {
             $this->zonesEndpoint = new Zones(
                 new Guzzle(
                     isset($this->token) ? new APIToken($this->token) : new APIKey($this->email, $this->key)

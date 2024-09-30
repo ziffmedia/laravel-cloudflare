@@ -16,7 +16,7 @@ class ClearCacheButton extends Field
     /**
      * Set the urls to be purged when button is clicked.
      *
-     * @param array|callable $urls
+     * @param  array|callable  $urls
      * @return $this
      */
     public function purgeUrls($urls)
@@ -29,7 +29,7 @@ class ClearCacheButton extends Field
     /**
      * Set the header tags to be purged when button is clicked.
      *
-     * @param array|callable $urls
+     * @param  array|callable  $urls
      * @return $this
      */
     public function purgeTags($tags)

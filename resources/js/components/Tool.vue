@@ -57,11 +57,11 @@ export default {
                     this.error(data.errorMessage)
                 } else {
                     if (this.urlArray.length === data.purgedUrls.length) {
-                        this.$toasted.show('All URLs purged successfully.', { type: 'success' })
+                        Nova.success('All URLs purged successfully.')
                         this.invalidUrls = [];
                     } else {
                         if (data.purgedUrls.length > 0) {
-                            this.$toasted.show(`${data.purgedUrls.length} URL${data.purgedUrls.length === 1 ? '' : 's'} purged successfully.`, { type: 'success' })
+                            Nova.success(`${data.purgedUrls.length} URL${data.purgedUrls.length === 1 ? '' : 's'} purged successfully.`)
                         }
                         if (this.urlArray.length > data.purgedUrls.length) {
                             this.invalidUrls = this.urlArray.filter(n => !data.purgedUrls.includes(n));
@@ -74,7 +74,7 @@ export default {
             }
         },
         error: function (message) {
-            this.$toasted.show(message, { type: 'error' });
+            Nova.error(message);
         }
     }
 }

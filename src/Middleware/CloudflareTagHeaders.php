@@ -3,19 +3,18 @@
 namespace ZiffMedia\LaravelCloudflare\Middleware;
 
 use Closure;
-use Illuminate\Http\Response;
 use ZiffMedia\LaravelCloudflare\Cloudflare;
 
 class CloudflareTagHeaders
 {
     const HEADER_NAME = 'Cache-Tag';
+
     const TAG_TEST_HEADER = 'debug_cache_tags';
 
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -24,7 +23,7 @@ class CloudflareTagHeaders
         $response = $next($request);
         $cloudflareTags = collect(app(Cloudflare::class)->getTags());
 
-        if (!$cloudflareTags->isEmpty()) {
+        if (! $cloudflareTags->isEmpty()) {
             $response->headers->add([self::HEADER_NAME => $cloudflareTags->implode(',')]);
             if ($testCacheTags) {
                 $response->headers->add([self::TAG_TEST_HEADER => $cloudflareTags->implode(',')]);

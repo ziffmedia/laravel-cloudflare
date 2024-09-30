@@ -1,9 +1,4 @@
-Nova.booting((Vue, router, store) => {
-  router.addRoutes([
-    {
-      name: 'laravel-cloudflare',
-      path: '/laravel-cloudflare',
-      component: require('./components/Tool').default,
-    },
-  ])
+import Tool from './components/Tool'
+Nova.booting((app, store) => {
+    Nova.inertia('LaravelCloudflare', Tool)
 })

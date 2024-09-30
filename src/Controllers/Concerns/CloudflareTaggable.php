@@ -19,7 +19,7 @@ trait CloudflareTaggable
         if (method_exists($model, 'cloudflareTag')) {
             $this->addCloudflareTag($model->cloudflareTag());
         } else {
-            $this->addCloudflareTag($model->getTable() . '_' . $model->getKey());
+            $this->addCloudflareTag($model->getTable().'_'.$model->getKey());
         }
     }
 
