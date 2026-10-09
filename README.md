@@ -57,7 +57,9 @@ CloudflareTool::make()->canSee(fn ($request) => $request->user()->can('purge-clo
 If an app does not register `CloudflareTool`, a signed-in Nova user gets a 404 from the Tool page and the purge
 routes.
 
-The Tool page and the purge routes answer only on `nova.domain`, like Nova's own routes.
+The Tool page and the purge routes answer only on `cloudflare.domain` (the `CLOUDFLARE_DOMAIN` env value) when it is
+set. Otherwise they use `nova.domain`, like Nova's own routes. Set `cloudflare.domain` only to a host that serves Nova.
+The Tool's menu link and its purge buttons use paths on the host that loaded Nova, so on any other host they get a 404.
 
 Note: The Tool is intended only for urls; setup for Cache Tags is not required if only using the Tool or url purging.
 
@@ -144,6 +146,7 @@ class Article extends Model
 * `auth.token`: API token, used in place of the email address and key
 * `zone`: Zone used for Cloudflare API
 * `allow_header_debugging`: Includes the Cloudflare API response headers in the response
+* `domain`: Domain for the Nova Tool page and the purge routes. When empty, they use `nova.domain`.
 
 ## Testing
 

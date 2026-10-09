@@ -47,4 +47,10 @@ return [
      * API responses.
      */
     'allow_header_debugging' => env('CLOUDFLARE_ALLOW_HEADER_DEBUGGING', false),
+
+    /*
+     * Domain for the Nova Tool page and the purge routes. When empty, they use nova.domain,
+     * like Nova's own routes.
+     */
+    'domain' => env('CLOUDFLARE_DOMAIN', null),
 ];

@@ -95,6 +95,27 @@ class CloudflareRoutesAuthorizationTest extends TestCase
         $this->{$method}('http://cms.test'.$uri)->assertOk();
     }
 
+    #[DataProvider('routes')]
+    #[WithConfig('nova.domain', 'cms.test', defer: false)]
+    #[WithConfig('cloudflare.domain', '', defer: false)]
+    public function test_an_empty_cloudflare_domain_uses_the_nova_domain(string $method, string $uri): void
+    {
+        $this->actingAs($this->novaUser());
+
+        $this->{$method}('http://localhost'.$uri)->assertNotFound();
+        $this->{$method}('http://cms.test'.$uri)->assertOk();
+    }
+
+    #[DataProvider('routes')]
+    #[WithConfig('cloudflare.domain', 'cms.test', defer: false)]
+    public function test_routes_only_answer_on_the_cloudflare_domain(string $method, string $uri): void
+    {
+        $this->actingAs($this->novaUser());
+
+        $this->{$method}('http://localhost'.$uri)->assertNotFound();
+        $this->{$method}('http://cms.test'.$uri)->assertOk();
+    }
+
     /**
      * Laravel 11's default app setup sends guests to route('login'), so the test app needs a route by that name.
      */
