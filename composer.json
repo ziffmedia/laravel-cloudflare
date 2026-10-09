@@ -11,9 +11,9 @@
         "php": "^8.2"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16",
-        "laravel/nova": "^4.0",
-        "laravel/pint": "^1.16"
+        "laravel/nova": "^5.0",
+        "laravel/pint": "^1.16",
+        "orchestra/testbench": "^11.0"
     },
     "autoload": {
         "psr-4": {
@@ -22,6 +22,11 @@
         "files": [
             "src/functions.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     },
     "extra": {
         "laravel": {
@@ -34,5 +39,8 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "scripts": {
+        "test": "phpunit"
+    }
 }

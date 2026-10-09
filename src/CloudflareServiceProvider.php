@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Nova;
+use ZiffMedia\LaravelCloudflare\Nova\Authorize;
 use ZiffMedia\LaravelCloudflare\Nova\CloudflareController;
 
 class CloudflareServiceProvider extends ServiceProvider
@@ -62,10 +63,16 @@ class CloudflareServiceProvider extends ServiceProvider
             );
         }
 
-        Nova::router(['nova'], 'cloudflare')
+        // One domain and one middleware list for the Tool page and the purge routes, so they always match.
+        $domain = config('nova.domain');
+        $middleware = ['nova:api', Authorize::class];
+
+        Nova::router($middleware, 'cloudflare')
+            ->domain($domain)
             ->group(fn ($router) => $router->get('/', fn () => inertia('CloudflareTool')));
 
-        Route::middleware(['nova'])
+        Route::domain($domain)
+            ->middleware($middleware)
             ->prefix('nova-vendor/cloudflare')
             ->namespace(__NAMESPACE__.'\\Controllers')
             ->group(function ($router) {
