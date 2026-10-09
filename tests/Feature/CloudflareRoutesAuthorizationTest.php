@@ -94,6 +94,29 @@ class CloudflareRoutesAuthorizationTest extends TestCase
         $this->actingAs($this->novaUser(viewNova: false))->json($method, $uri, self::PURGE)->assertForbidden();
     }
 
+    #[WithConfig('cloudflare.domain', 'cms.test', defer: false)]
+    public function test_the_routes_only_answer_on_the_cloudflare_domain(): void
+    {
+        $this->actingAs($this->novaUser());
+
+        $this->postJson('http://localhost'.self::PURGE_URI)->assertNotFound();
+        $this->postJson('http://cms.test'.self::PURGE_URI)->assertOk();
+        $this->get('http://localhost/nova/laravel-cloudflare')->assertNotFound();
+        $this->get('http://cms.test/nova/laravel-cloudflare')->assertOk();
+    }
+
+    #[WithConfig('nova.domain', 'cms.test', defer: false)]
+    #[WithConfig('cloudflare.domain', '', defer: false)]
+    public function test_an_empty_cloudflare_domain_uses_the_nova_domain(): void
+    {
+        $this->actingAs($this->novaUser());
+
+        $this->postJson('http://localhost'.self::PURGE_URI)->assertNotFound();
+        $this->postJson('http://cms.test'.self::PURGE_URI)->assertOk();
+        $this->get('http://localhost/nova/laravel-cloudflare')->assertNotFound();
+        $this->get('http://cms.test/nova/laravel-cloudflare')->assertOk();
+    }
+
     #[WithConfig('nova.domain', 'cms.test', defer: false)]
     public function test_the_routes_only_answer_on_the_nova_domain(): void
     {

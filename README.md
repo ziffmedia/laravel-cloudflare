@@ -58,7 +58,11 @@ LaravelCloudflareTool::make()->canSee(fn ($request) => $request->user()->can('pu
 If an app does not register `LaravelCloudflareTool`, a signed-in Nova user who passes the `viewNova` gate gets a 404
 from the Tool page and the purge route, so the Field's button only works when the Tool is registered.
 
-The Tool page and the purge route answer only on `nova.domain`, like Nova's own routes.
+The Tool page and the purge route answer only on `cloudflare.domain` (the `CLOUDFLARE_DOMAIN` env value) when it is
+set. Otherwise they use `nova.domain`, like Nova's own routes. Set `cloudflare.domain` only to a host that serves Nova.
+The Tool's menu link and the purge buttons use paths on the host that loaded Nova, so on any other host they get a 404.
+If your app published `config/cloudflare.php` before this setting existed, add
+`'domain' => env('CLOUDFLARE_DOMAIN'),` to it.
 
 Note: The Tool is intended only for urls; setup for Cache Tags is not required if only using the Tool or url purging.
 
@@ -153,6 +157,7 @@ class Article extends Model
 * `email`: Email address used for authenticating with Cloudflare API
 * `key`: Key used to authenticate with Cloudflare API
 * `zone`: Zone used for Cloudflare API
+* `domain`: Domain for the Nova Tool page and the purge route. When empty, they use `nova.domain`.
 * `domains`: An array of domains which are allowed to be purged. All url purge requests will be validated against these domains, if any.
 
 ## Testing

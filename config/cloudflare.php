@@ -27,4 +27,10 @@ return [
      */
     'purge_enabled' => env('CLOUDFLARE_PURGE_ENABLED', false),
 
+    /*
+     * Domain for the Nova Tool page and the purge route. When empty, they use nova.domain,
+     * like Nova's own routes.
+     */
+    'domain' => env('CLOUDFLARE_DOMAIN', null),
+
 ];

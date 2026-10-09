@@ -46,7 +46,7 @@ class CloudflareServiceProvider extends ServiceProvider
         }
 
         // One domain and one middleware list for the Tool page and the purge route, so they always match.
-        $domain = config('nova.domain');
+        $domain = config('cloudflare.domain') ?: config('nova.domain');
         $middleware = ['nova:api', Authorize::class];
 
         Nova::router($middleware, 'laravel-cloudflare')
