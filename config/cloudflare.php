@@ -27,4 +27,9 @@ return [
      */
     'purge_enabled'   => env('CLOUDFLARE_PURGE_ENABLED', false),
 
+    /*
+     * Domain for the purge route. When empty, it uses nova.domain, like Nova's own routes.
+     */
+    'domain' => env('CLOUDFLARE_DOMAIN', null),
+
 ];

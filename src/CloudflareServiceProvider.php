@@ -49,7 +49,7 @@ class CloudflareServiceProvider extends ServiceProvider
             return;
         }
 
-        $domain = config('nova.domain');
+        $domain = config('cloudflare.domain') ?: config('nova.domain');
 
         // Nova 4 and later keep the login and viewNova checks in the nova:api group. Nova 3 has no such group,
         // so it gets the same checks by name.

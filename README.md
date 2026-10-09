@@ -62,7 +62,10 @@ from the purge route, so the Field's button only works when the Tool is register
 On Nova 4 the Tool cannot be used: registering it causes a PHP fatal error, because it has no `menu()` method. So on
 Nova 4 a signed-in user who passes the `viewNova` gate always gets a 404 from the purge route.
 
-The purge route answers only on `nova.domain`, like Nova's own routes.
+The purge route answers only on `cloudflare.domain` (the `CLOUDFLARE_DOMAIN` env value) when it is set. Otherwise it
+uses `nova.domain`, like Nova's own routes. Set `cloudflare.domain` only to a host that serves Nova. The Tool and the
+Field send purge requests to the host that loaded Nova, so on any other host they get a 404. If your app published
+`config/cloudflare.php` before this setting existed, add `'domain' => env('CLOUDFLARE_DOMAIN'),` to it.
 
 Note: The Tool is intended only for urls; setup for Cache Tags is not required if only using the Tool or url purging.
 
@@ -157,6 +160,7 @@ class Article extends Model
 * `email`: Email address used for authenticating with Cloudflare API
 * `key`: Key used to authenticate with Cloudflare API
 * `zone`: Zone used for Cloudflare API
+* `domain`: Domain for the purge route. When empty, it uses `nova.domain`.
 * `domains`: An array of domains which are allowed to be purged. All url purge requests will be validated against these domains, if any.
 
 ## Testing
