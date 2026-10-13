@@ -2,9 +2,12 @@
 
 namespace ZiffMedia\LaravelCloudflare;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
+use Laravel\Nova\Http\Middleware\Authenticate;
+use Laravel\Nova\Http\Middleware\Authorize as NovaAuthorize;
 use Laravel\Nova\Nova;
 use ZiffMedia\LaravelCloudflare\Middleware\Authorize;
 
@@ -47,7 +50,21 @@ class CloudflareServiceProvider extends ServiceProvider
             return;
         }
 
-        Route::middleware(['nova'])
+        $domain = config('cloudflare.routing.domain') ?: config('nova.domain');
+
+        // Nova 4 and later keep the login and viewNova checks in the nova:api group. Nova 3 has no such group,
+        // so it gets the same checks by name.
+        $defaultMiddleware = Route::hasMiddlewareGroup('nova:api')
+            ? ['nova:api']
+            : ['nova', Authenticate::class, NovaAuthorize::class];
+
+        $middleware = array_merge(
+            Arr::wrap(config('cloudflare.routing.middleware')) ?: $defaultMiddleware,
+            [Authorize::class]
+        );
+
+        Route::domain($domain)
+            ->middleware($middleware)
             ->prefix('nova-vendor/laravel-cloudflare')
             ->namespace(__NAMESPACE__ . '\\Controllers')
             ->group(function ($route) {
