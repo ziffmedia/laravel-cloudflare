@@ -47,7 +47,23 @@ public function tools()
 }
 ```
 
-For adding permissions to the Tool, please see the Nova [documentation](https://nova.laravel.com/docs/1.0/customization/tools.html#authorization "Nova Tool Documentation").
+The Tool page and its purge routes run the same checks as the rest of Nova (by default, a Nova login and the
+`viewNova` gate), then the Tool's `canSee`. Use `canSee` to choose who can use the Tool page and its purge routes:
+
+```php
+CloudflareTool::make()->canSee(fn ($request) => $request->user()->can('purge-cloudflare'))
+```
+
+If an app does not register `CloudflareTool`, a signed-in Nova user gets a 404 from the Tool page and the purge
+routes.
+
+The `routing` section of the config controls these routes:
+
+* `routing.domain` (the `CLOUDFLARE_ROUTING_DOMAIN` env value): the host the Tool page and the purge routes answer on.
+  When it is empty, they use `nova.domain`, like Nova's own routes. Set it only to a host that serves Nova. The Tool's
+  menu link and its purge buttons use paths on the host that loaded Nova, so on any other host they get a 404.
+* `routing.middleware`: the middleware the Tool page and the purge routes run before the Tool's own check. It defaults to
+  `nova:api`, Nova's group for its own API routes, and an empty value also uses `nova:api`.
 
 Note: The Tool is intended only for urls; setup for Cache Tags is not required if only using the Tool or url purging.
 
@@ -129,8 +145,20 @@ class Article extends Model
 ## Config Options
 
 * `purge_enabled`: Allows for purging to be turned on or off
-* `email`: Email address used for authenticating with Cloudflare API
-* `key`: Key used to authenticate with Cloudflare API
+* `auth.email` and `auth.key`: Email address and key used for authenticating with Cloudflare API
+* `auth.user_service_key`: User service key, used in place of the email address and key
+* `auth.token`: API token, used in place of the email address and key
 * `zone`: Zone used for Cloudflare API
-* `domains`: An array of domains which are allowed to be purged. All url purge requests will be validated against these domains, if any.
+* `allow_header_debugging`: Includes the Cloudflare API response headers in the response
+* `routing.domain`: Domain for the Nova Tool page and the purge routes. When empty, they use `nova.domain`.
+* `routing.middleware`: Middleware for the Nova Tool page and the purge routes, run before the Tool's own check.
 
+## Testing
+
+The tests need PHP 8.3 or later and Laravel Nova. Installing Nova needs a Nova license and a Composer repository that
+serves `laravel/nova`, such as nova.laravel.com. Then install and run the tests:
+
+```console
+composer install
+composer test
+```

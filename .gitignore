@@ -5,3 +5,4 @@ composer.lock
 composer.phar
 /demo
 /docker-compose.yml
+/.phpunit.cache
