@@ -62,8 +62,20 @@ class CloudflareRoutesAuthorizationTest extends TestCase
         $this->actingAs($this->novaUser())->postJson(self::PURGE_URI, self::PURGE)->assertStatus(418);
     }
 
-    #[WithConfig('cloudflare.domain', 'cms.test', defer: false)]
-    public function test_the_route_only_answers_on_the_cloudflare_domain(): void
+    #[WithConfig('cloudflare.routing.middleware', ['nova:api', RejectRequest::class], defer: false)]
+    public function test_the_route_uses_the_routing_middleware(): void
+    {
+        $this->actingAs($this->novaUser())->postJson(self::PURGE_URI, self::PURGE)->assertStatus(418);
+    }
+
+    #[WithConfig('cloudflare.routing.middleware', [], defer: false)]
+    public function test_an_empty_routing_middleware_uses_nova_api(): void
+    {
+        $this->postJson(self::PURGE_URI, self::PURGE)->assertUnauthorized();
+    }
+
+    #[WithConfig('cloudflare.routing.domain', 'cms.test', defer: false)]
+    public function test_the_route_only_answers_on_the_routing_domain(): void
     {
         $this->actingAs($this->novaUser());
 
@@ -72,8 +84,8 @@ class CloudflareRoutesAuthorizationTest extends TestCase
     }
 
     #[WithConfig('nova.domain', 'cms.test', defer: false)]
-    #[WithConfig('cloudflare.domain', '', defer: false)]
-    public function test_an_empty_cloudflare_domain_uses_the_nova_domain(): void
+    #[WithConfig('cloudflare.routing.domain', '', defer: false)]
+    public function test_an_empty_routing_domain_uses_the_nova_domain(): void
     {
         $this->actingAs($this->novaUser());
 

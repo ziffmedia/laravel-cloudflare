@@ -28,8 +28,16 @@ return [
     'purge_enabled'   => env('CLOUDFLARE_PURGE_ENABLED', false),
 
     /*
-     * Domain for the purge route. When empty, it uses nova.domain, like Nova's own routes.
+     * Routing for the purge route.
+     *
+     * domain: the host it answers on. When empty, it uses nova.domain, like Nova's own routes.
+     * middleware: the middleware it runs before the Tool's own check (LaravelCloudflareTool and its canSee).
+     * When empty, it uses nova:api, or on Nova 3, which has no nova:api group, nova plus Nova's
+     * Authenticate and Authorize.
      */
-    'domain' => env('CLOUDFLARE_DOMAIN', null),
+    'routing' => [
+        'domain'     => env('CLOUDFLARE_ROUTING_DOMAIN', null),
+        'middleware' => null,
+    ],
 
 ];
