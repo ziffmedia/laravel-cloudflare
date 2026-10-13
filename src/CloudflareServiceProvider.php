@@ -2,12 +2,12 @@
 
 namespace ZiffMedia\LaravelCloudflare;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
-use Laravel\Nova\Http\Middleware\Authenticate;
-use Laravel\Nova\Http\Middleware\Authorize;
 use Laravel\Nova\Nova;
+use ZiffMedia\LaravelCloudflare\Middleware\Authorize;
 
 class CloudflareServiceProvider extends ServiceProvider
 {
@@ -46,10 +46,16 @@ class CloudflareServiceProvider extends ServiceProvider
             return;
         }
 
-        Nova::router(['nova', Authenticate::class, Authorize::class], 'laravel-cloudflare')
+        // One domain and one middleware list for the Tool page and the purge route, so they always match.
+        $domain = config('cloudflare.routing.domain') ?: config('nova.domain');
+        $middleware = array_merge(Arr::wrap(config('cloudflare.routing.middleware')) ?: ['nova:api'], [Authorize::class]);
+
+        Nova::router($middleware, 'laravel-cloudflare')
+            ->domain($domain)
             ->group(__DIR__.'/../routes/inertia.php');
 
-        Route::middleware(['nova', Authorize::class])
+        Route::domain($domain)
+            ->middleware($middleware)
             ->prefix('nova-vendor/laravel-cloudflare')
             ->namespace(__NAMESPACE__.'\\Controllers')
             ->group(function ($route) {

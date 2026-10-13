@@ -3,7 +3,7 @@
 ## Features
 * Laravel Nova Tool for adding a cache purge page to manually purge specific urls in batches
 * Laravel Nova Field for cache purging specific urls or Cache Tags for a resource
-* Option to include either the Tool, Field, or both in project
+* Option to include the Tool, or the Tool and the Field (the Field needs the Tool registered)
 * Option to use urls, Cache Tag header, or both for purging Cloudflare cache 
 
 ##### Nova Tool:
@@ -47,13 +47,44 @@ public function tools()
 }
 ```
 
-For adding permissions to the Tool, please see the Nova [documentation](https://nova.laravel.com/docs/1.0/customization/tools.html#authorization "Nova Tool Documentation").
+The Tool and the Field both send purges to the same purge route. That route and the Tool page run the same checks as
+the rest of Nova (by default, a Nova login and the `viewNova` gate), then the Tool's `canSee`. Use `canSee` to choose
+who can purge:
+
+```php
+LaravelCloudflareTool::make()->canSee(fn ($request) => $request->user()->can('purge-cloudflare'))
+```
+
+If an app does not register `LaravelCloudflareTool`, a signed-in Nova user who passes the `viewNova` gate gets a 404
+from the Tool page and the purge route, so the Field's button only works when the Tool is registered.
+
+The `routing` section of the config controls these routes:
+
+* `routing.domain` (the `CLOUDFLARE_ROUTING_DOMAIN` env value): the host the Tool page and the purge route answer on.
+  When it is empty, they use `nova.domain`, like Nova's own routes. Set it only to a host that serves Nova. The Tool's
+  menu link and the purge buttons use paths on the host that loaded Nova, so on any other host they get a 404.
+* `routing.middleware`: the middleware the Tool page and the purge route run before the Tool's own check. When it is
+  empty, they use `nova:api`, Nova's group for its own API routes.
+
+If your app published `config/cloudflare.php` before this section existed, the defaults apply. To change either value,
+add the section to it:
+
+```php
+'routing' => [
+    'domain' => env('CLOUDFLARE_ROUTING_DOMAIN'),
+    'middleware' => ['nova:api'],
+],
+```
 
 Note: The Tool is intended only for urls; setup for Cache Tags is not required if only using the Tool or url purging.
 
 ## Nova Field Integration
 
 To provide the Cache Purge button on any resource, you must reference the Field and make sure that you have setup the appropriate purge method (url or Cache Tag).
+
+The Field's button uses the Tool's purge route, so you must also register `LaravelCloudflareTool` (see above). The
+Tool's `canSee` decides who can use the button, so give the Field the same `canSee` to hide the button from everyone
+else.
 
 ```php
 // app/Nova/
@@ -138,5 +169,16 @@ class Article extends Model
 * `email`: Email address used for authenticating with Cloudflare API
 * `key`: Key used to authenticate with Cloudflare API
 * `zone`: Zone used for Cloudflare API
+* `routing.domain`: Domain for the Nova Tool page and the purge route. When empty, they use `nova.domain`.
+* `routing.middleware`: Middleware for the Nova Tool page and the purge route, run before the Tool's own check.
 * `domains`: An array of domains which are allowed to be purged. All url purge requests will be validated against these domains, if any.
 
+## Testing
+
+The tests run on Nova 4 and Laravel 11, which need PHP 8.2, 8.3 or 8.4. Installing Nova needs a Nova license and a
+Composer repository that serves `laravel/nova`, such as nova.laravel.com. Then install and run the tests:
+
+```console
+composer install
+composer test
+```

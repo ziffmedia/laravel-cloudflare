@@ -26,17 +26,20 @@
     "config": {
         "sort-packages": true
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://repo.packagist.com/ziffdavis/"
-        }
-    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
         "laravel/framework": "^11.20",
         "laravel/nova": "^4.35",
-        "laravel/pint": "^1.17"
+        "laravel/pint": "^1.17",
+        "orchestra/testbench": "^9.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }
