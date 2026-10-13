@@ -61,6 +61,20 @@ class CloudflareRoutesAuthorizationTest extends TestCase
     }
 
     #[DataProvider('routes')]
+    #[WithConfig('cloudflare.routing.middleware', ['nova:api', RejectRequest::class], defer: false)]
+    public function test_routes_use_the_routing_middleware(string $method, string $uri): void
+    {
+        $this->actingAs($this->novaUser())->json($method, $uri, self::PURGE)->assertStatus(418);
+    }
+
+    #[DataProvider('routes')]
+    #[WithConfig('cloudflare.routing.middleware', [], defer: false)]
+    public function test_an_empty_routing_middleware_uses_nova_api(string $method, string $uri): void
+    {
+        $this->json($method, $uri, self::PURGE)->assertUnauthorized();
+    }
+
+    #[DataProvider('routes')]
     public function test_the_tool_can_see_check_decides_who_gets_in(string $method, string $uri): void
     {
         $this->tools = [LaravelCloudflareTool::make()->canSee(fn ($request) => $request->user()->getAuthIdentifier() === 2)];
@@ -94,8 +108,8 @@ class CloudflareRoutesAuthorizationTest extends TestCase
         $this->actingAs($this->novaUser(viewNova: false))->json($method, $uri, self::PURGE)->assertForbidden();
     }
 
-    #[WithConfig('cloudflare.domain', 'cms.test', defer: false)]
-    public function test_the_routes_only_answer_on_the_cloudflare_domain(): void
+    #[WithConfig('cloudflare.routing.domain', 'cms.test', defer: false)]
+    public function test_the_routes_only_answer_on_the_routing_domain(): void
     {
         $this->actingAs($this->novaUser());
 
@@ -106,8 +120,8 @@ class CloudflareRoutesAuthorizationTest extends TestCase
     }
 
     #[WithConfig('nova.domain', 'cms.test', defer: false)]
-    #[WithConfig('cloudflare.domain', '', defer: false)]
-    public function test_an_empty_cloudflare_domain_uses_the_nova_domain(): void
+    #[WithConfig('cloudflare.routing.domain', '', defer: false)]
+    public function test_an_empty_routing_domain_uses_the_nova_domain(): void
     {
         $this->actingAs($this->novaUser());
 
